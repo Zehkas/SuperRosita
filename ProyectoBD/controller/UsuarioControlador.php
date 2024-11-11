@@ -12,6 +12,13 @@ class UsuarioControlador {
             $region = $_POST['region'];
             $contrasena = $_POST['contrasena'];
 
+            // Validar que el código de región sea correcto
+            $regiones_validas = ['1', '2']; // Agrega los códigos de región válidos
+            if (!in_array($region, $regiones_validas)) {
+                echo "Error: Seleccione una región válida.";
+                exit();
+            }
+
             // Crear una instancia del modelo Usuario
             $usuario = new Usuario();
             
@@ -28,7 +35,21 @@ class UsuarioControlador {
     }
 
     public function Login() {
-        // Lógica para el login del usuario
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $correo = $_POST['email'];
+            $contrasena = $_POST['password'];
+
+            $usuario = new Usuario();
+            $resultado = $usuario->validarCliente($correo, $contrasena);
+
+            if ($resultado) {
+                header("Location: ./view/success.php");
+                exit();
+            } else {
+                header("Location: ./view/errorlogin.php");
+                exit();
+            }
+        }
     }
 }
 ?>

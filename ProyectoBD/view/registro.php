@@ -30,11 +30,26 @@
                     <input type="password" id="contrasena" name="contrasena" required>
 
                     <label for="region">Región:</label>
-                    <input type="number" id="region" name="region" required>
+                    <select id="region" name="region" required>
+                        <option value="">Seleccione una región</option>
+                        <option value="1">Maule</option>
+                        <option value="2">Ñuble</option>
+                        <!-- Agrega más opciones si tienes otras regiones en tu base de datos -->
+                    </select>
 
                     <input type="submit" value="Registrar">
                 </div>
             </form>
+            <script>
+            function validateForm() {
+                var region = document.getElementById("region").value;
+                if (region === "") {
+                    alert("Seleccione una región válidaaa.");
+                    return false;
+                }
+                return true;
+            }
+            </script>
         </div>
     </div>
 
