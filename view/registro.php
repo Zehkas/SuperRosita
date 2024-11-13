@@ -44,7 +44,6 @@
             <!-- Enlace de inicio de sesión añadido -->
             <div style="text-align: center; margin-top: 20px;">
                 <p>¿Ya tienes una cuenta? <a href="../view/login.php">Iniciar sesión</a></p>
-                <p>Esto es una prueba</p>
             </div>
             
         </div>
