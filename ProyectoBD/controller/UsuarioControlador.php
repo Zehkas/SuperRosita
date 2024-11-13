@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once './model/usuario.php';
 
 class UsuarioControlador {
@@ -43,6 +44,7 @@ class UsuarioControlador {
             $resultado = $usuario->validarCliente($correo, $contrasena);
 
             if ($resultado) {
+                $_SESSION['usuario'] = $correo;
                 header("Location: ./view/success.php");
                 exit();
             } else {
