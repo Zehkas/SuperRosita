@@ -19,13 +19,6 @@ body {
     font-size: 24px;
 }
 
-.centrar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
 .modal {
     display: none;
     position: fixed;

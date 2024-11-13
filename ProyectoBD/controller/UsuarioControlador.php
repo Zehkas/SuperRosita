@@ -30,7 +30,8 @@ class UsuarioControlador {
                 header("Location: ./view/success.php"); // Redirige a una página de éxito
                 exit();
             } else {
-                echo "Error al registrar el cliente.";
+                header("Location: ./view/inicio.php"); // Cambiar la página para el error
+                exit();
             }
         }
     }

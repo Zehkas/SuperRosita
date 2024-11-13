@@ -6,6 +6,15 @@
     <title>Registro SuperRosita</title>
     <link rel="stylesheet" href="../css/registro.css">
     <link rel="stylesheet" href="../css/global.css">
+    <style>
+    .centrar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    </style>
+    
 </head>
 <body>
 
