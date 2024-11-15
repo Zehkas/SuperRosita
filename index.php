@@ -19,7 +19,7 @@
                 break;
     
             default:
-                header('Location: ./view/inicio.html');
+                header('Location: ./view/inicio.php');
                 exit();
         }
 

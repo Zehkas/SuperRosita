@@ -17,7 +17,7 @@
 </head>
 
 <body>
-
+    <?php include './header.php'; ?>
     <div class="centrar">
         <div class="contenedorRegistro">
             <h2>Registro en SuperRosita</h2>

@@ -1,4 +1,3 @@
-<?php session_start()?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,37 +13,7 @@
 
     <body>
 
-    <header class="header">
-        <div class="logo">
-            <super class="fas fa-shopping-cart"></super> SuperRosita
-        </div>
-        <div class="botonesHeader">
-            <?php if (isset($_SESSION['usuario'])): ?>
-                <div class="botonPerfil" onclick="location.href='../index.php?redirect=perfil'">
-                    <i class="fas fa-user"></i> Ver Mi Perfil
-                </div>
-                <div class="botonCarrito" onclick="location.href='../index.php?redirect=carrito'">
-                    <i class="fas fa-shopping-cart"></i> Ver Mi Carrito
-                </div>
-                <div class="botonCerrarSesion" onclick="location.href='../logout.php'">
-                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                </div>
-
-            <?php else: ?>
-                <div class="botonRegistro" onclick="location.href='../index.php?redirect=registro'">
-                    <i class="fas fa-user-plus"></i> Registrarse
-                </div>
-
-                <div class="botonInicioSesion" onclick="location.href='../index.php?redirect=login'">
-                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-                </div>
-            <?php endif; ?>
-        </div>
-    </header>
-
-
-
-
+    <?php include './header.php'; ?>
 
         <div class="contenedor">
             <h1>Página Principal</h1>

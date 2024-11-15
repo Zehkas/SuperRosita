@@ -12,7 +12,7 @@ class RedirectControlador{
                     break;
         
                 case 'verMas':
-                    header("Location: ./view/mas-productos.html");
+                    header("Location: ./view/mas-productos.php");
                     break;
         
                 case 'inicio':

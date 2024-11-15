@@ -18,6 +18,8 @@
 
 <body>
 
+    <?php include './header.php'; ?>
+
     <div class = "centrar">
         <div class = "contenedorLogin">
             <h2>Inicio De Sesión</h2>
