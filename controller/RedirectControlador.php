@@ -16,7 +16,7 @@ class RedirectControlador{
                     break;
         
                 case 'inicio':
-                    header("Location: ./view/inicio.html");
+                    header("Location: ./view/inicio.php");
                     break;
             }
             exit();
