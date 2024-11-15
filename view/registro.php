@@ -6,7 +6,16 @@
     <title>Registro SuperRosita</title>
     <link rel="stylesheet" href="../css/registro.css">
     <link rel="stylesheet" href="../css/global.css">
+    <style>
+        .centrar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
 </head>
+
 <body>
 
     <div class="centrar">
@@ -41,7 +50,6 @@
                 </div>
             </form>
 
-            <!-- Enlace de inicio de sesión añadido -->
             <div style="text-align: center; margin-top: 20px;">
                 <p>¿Ya tienes una cuenta? <a href="../view/login.php">Iniciar sesión</a></p>
             </div>

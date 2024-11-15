@@ -6,7 +6,16 @@
     <title>Cliente SuperRosita</title>
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/global.css">
+    <style>
+        .centrar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
 </head>
+
 <body>
 
     <div class = "centrar">
@@ -23,8 +32,10 @@
                     <input type="submit" value = "Iniciar Sesión">
                 </div>
             </form>
+            <p style="text-align: center; margin-top: 10px;">¿No tienes una cuenta? <a href="../view/registro.php">Registrarse</a></p>
         </div>
     </div>
+
 
 </body>
 </html>
