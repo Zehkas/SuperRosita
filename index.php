@@ -1,14 +1,9 @@
 <?php
-    require_once './controller/RedirectControlador.php';
     require_once './controller/UsuarioControlador.php';
 
-    $redirectControlador = new RedirectControlador();
     $usuarioControlador = new UsuarioControlador();
 
-    if (isset($_GET['redirect'])) {
-        $redirectControlador->Redirect();
-        
-    } elseif (isset($_GET['action'])) {
+    if (isset($_GET['action'])) {
         switch ($_GET['action']) {
             case 'registro':
                 $usuarioControlador->Registro();

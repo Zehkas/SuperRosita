@@ -51,7 +51,7 @@
             </form>
 
             <div style="text-align: center; margin-top: 20px;">
-                <p>¿Ya tienes una cuenta? <a href="../view/login.php">Iniciar sesión</a></p>
+                <p>¿Ya tienes una cuenta? <a href="./login.php">Iniciar sesión</a></p>
             </div>
             
         </div>

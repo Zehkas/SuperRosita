@@ -34,7 +34,7 @@
                     <input type="submit" value = "Iniciar Sesión">
                 </div>
             </form>
-            <p style="text-align: center; margin-top: 10px;">¿No tienes una cuenta? <a href="../view/registro.php">Registrarse</a></p>
+            <p style="text-align: center; margin-top: 10px;">¿No tienes una cuenta? <a href="./registro.php">Registrarse</a></p>
         </div>
     </div>
 

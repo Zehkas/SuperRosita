@@ -46,14 +46,14 @@ session_start();
 
 <header class="header">
     <div class="logo">
-        <super class="fas fa-shopping-cart"></super> SuperRosita
+        <super class="fas fa-shopping-cart" onclick="location.href='./inicio.php'"></super>SuperRosita
     </div>
     <div class="botonesHeader">
         <?php if (isset($_SESSION['usuario'])): ?>
-            <div class="botonPerfil" onclick="location.href='./index.php?redirect=perfil'">
+            <div class="botonPerfil" onclick="location.href='./perfil'">
                 <i class="fas fa-user"></i> Ver Mi Perfil
             </div>
-            <div class="botonCarrito" onclick="location.href='../index.php?redirect=carrito'">
+            <div class="botonCarrito" onclick="location.href='./carrito'">
                 <i class="fas fa-shopping-cart"></i> Ver Mi Carrito
             </div>
             <div class="botonCerrarSesion" onclick="location.href='../logout.php'">
@@ -61,11 +61,11 @@ session_start();
             </div>
 
         <?php else: ?>
-            <div class="botonRegistro" onclick="location.href='../index.php?redirect=registro'">
+            <div class="botonRegistro" onclick="location.href='./registro.php'">
                 <i class="fas fa-user-plus"></i> Registrarse
             </div>
 
-            <div class="botonInicioSesion" onclick="location.href='../index.php?redirect=login'">
+            <div class="botonInicioSesion" onclick="location.href='./login.php'">
                 <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
             </div>
         <?php endif; ?>

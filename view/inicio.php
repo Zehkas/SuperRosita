@@ -48,7 +48,7 @@
             </div>
         </section>
 
-        <div class="ver-mas"> <button onclick="location.href='../index.php?redirect=verMas'">Ver más productos</button> </div>
+        <div class="ver-mas"> <button onclick="location.href='./mas-productos.php'">Ver más productos</button> </div>
 
         <div id="modal" class="modal">
             <div class="modal-content">
