@@ -11,7 +11,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            position: relative;
+            top: calc(50vh - 42.22px);
+            transform: translateY(-50%);
         }
         .contenedorSuccess{
             width: 35%;

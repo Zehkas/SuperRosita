@@ -41,11 +41,16 @@ class UsuarioControlador {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $correo = $_POST['email'];
             $contrasena = $_POST['password'];
+            
 
             $usuario = new Usuario();
             $resultado = $usuario->validarCliente($correo, $contrasena);
+            $datos = $usuario->obtenerDatos($correo);
 
             if ($resultado) {
+                $_SESSION['nombre'] = $datos['NOMBRE_CLIENTE'];
+                $_SESSION['apellido1'] = $datos['APELLIDO1_CLIENTE'];
+                $_SESSION['apellido2'] = $datos['APELLIDO2_CLIENTE'];
                 $_SESSION['usuario'] = $correo;
                 header("Location: /SuperRosita/success");
                 exit();
