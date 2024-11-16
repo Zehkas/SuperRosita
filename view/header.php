@@ -25,7 +25,6 @@ if (session_status() === PHP_SESSION_NONE) {
     font-size: 24px;
 }
 
-
 .logo super {
     margin-right: 8px;
     /* Espacio entre el icono y el texto */
