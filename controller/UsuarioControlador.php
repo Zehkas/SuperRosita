@@ -12,7 +12,7 @@ class UsuarioControlador {
             $correo = $_POST['correo'];
             $region = $_POST['region'];
             $contrasena = $_POST['contrasena'];
-
+            
             // Validar que el código de región sea correcto
             $regiones_validas = ['1', '2']; // Agrega los códigos de región válidos
             if (!in_array($region, $regiones_validas)) {
@@ -30,7 +30,8 @@ class UsuarioControlador {
                 header("Location: /SuperRosita/success"); // Redirige a una página de éxito
                 exit();
             } else {
-                header("Location: /SuperRosita/errorregistro"); // Cambiar la página para el error
+                $_SESSION['error_registro'] = "Error al registrarse";
+                header("Location: /SuperRosita/registro");
                 exit();
             }
         }
@@ -49,7 +50,8 @@ class UsuarioControlador {
                 header("Location: /SuperRosita/success");
                 exit();
             } else {
-                header("Location: /SuperRosita/errorlogin");
+                $_SESSION['error_login'] = "Error al iniciar sesion, Correo o contraseña incorrectos";
+                header("Location: /SuperRosita/login");
                 exit();
             }
         }

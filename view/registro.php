@@ -53,6 +53,11 @@
                 </div>
             </form>
 
+            <?php if (isset($_SESSION['error_registro'])): ?>
+                <p style="color: #FF0000"><?php echo $_SESSION['error_registro']; ?></p>
+                <?php unset($_SESSION['error_registro']); ?>
+            <?php endif; ?>
+
             <div style="text-align: center; margin-top: 20px;">
                 <p>¿Ya tienes una cuenta? <a href="/SuperRosita/login">Iniciar sesión</a></p>
             </div>

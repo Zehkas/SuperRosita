@@ -17,9 +17,6 @@ class RedirectControlador {
             case 'errorregistro':
                 require_once __DIR__ . '/../view/errorregistro.php';
                 break;
-            case 'errorlogin':
-                require_once __DIR__ . '/../view/errorlogin.php';
-                break;
             case 'inicio':
                 require_once __DIR__ . '/../view/inicio.php';
                 break;
