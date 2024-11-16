@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <style>
     .botonesHeader {
@@ -45,27 +47,27 @@ session_start();
 
 
 <header class="header">
-    <div class="logo">
-        <super class="fas fa-shopping-cart" onclick="location.href='./inicio.php'"></super>SuperRosita
+    <div class="logo" onclick="location.href='/SuperRosita/'">
+        <super class="fas fa-shopping-cart"></super>SuperRosita
     </div>
     <div class="botonesHeader">
         <?php if (isset($_SESSION['usuario'])): ?>
-            <div class="botonPerfil" onclick="location.href='./perfil'">
+            <div class="botonPerfil" onclick="location.href='/SuperRosita/perfil'">
                 <i class="fas fa-user"></i> Ver Mi Perfil
             </div>
-            <div class="botonCarrito" onclick="location.href='./carrito'">
+            <div class="botonCarrito" onclick="location.href='/SuperRosita/carrito'">
                 <i class="fas fa-shopping-cart"></i> Ver Mi Carrito
             </div>
-            <div class="botonCerrarSesion" onclick="location.href='../logout.php'">
+            <div class="botonCerrarSesion" onclick="location.href='/SuperRosita/logout'">
                 <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
             </div>
 
         <?php else: ?>
-            <div class="botonRegistro" onclick="location.href='./registro.php'">
+            <div class="botonRegistro" onclick="location.href='/SuperRosita/registro'">
                 <i class="fas fa-user-plus"></i> Registrarse
             </div>
 
-            <div class="botonInicioSesion" onclick="location.href='./login.php'">
+            <div class="botonInicioSesion" onclick="location.href='/SuperRosita/login'">
                 <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
             </div>
         <?php endif; ?>

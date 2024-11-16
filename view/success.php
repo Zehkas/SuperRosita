@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Exitoso</title>
+    <link rel="stylesheet" href="/SuperRosita/css/global.css">
     <style>
         .centrar {
             display: flex;
@@ -37,13 +39,27 @@
     </style>
 </head>
 <body>
+    <?php include __DIR__ . '/header.php'; ?>
+
+    <?php if (isset($_SESSION['usuario'])): ?>
+    <div class="centrar">
+        <div class = "contenedorSuccess">
+            <h2>Inicio Exitoso!</h2>
+            <p>Iniciaste Sesión en SuperRosita.</p>
+            <button onclick="window.location.href='/SuperRosita/'">Volver al Inicio</button>
+        </div>
+    </div>
+
+    <?php else: ?>
     <div class="centrar">
         <div class = "contenedorSuccess">
             <h2>Registro Exitoso!</h2>
             <p>Gracias por registrarte en SuperRosita. Ahora puedes iniciar sesion</p>
-            <button onclick="window.location.href='./inicio.php'">Volver al Inicio</button>
+            <button onclick="window.location.href='/SuperRosita/'">Volver al Inicio</button>
         </div>
     </div>
+    <?php endif; ?>
+
 </body>
 </html>
 

@@ -5,15 +5,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SuperRosita</title>
-        <link rel="stylesheet" href="../css/inicio.css">
-        <link rel="stylesheet" href="../css/global.css">
+        <link rel="stylesheet" href="/SuperRosita/css/inicio.css">
+        <link rel="stylesheet" href="/SuperRosita/css/global.css">
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
 
     <body>
 
-    <?php include './header.php'; ?>
+    <?php include __DIR__ . '/header.php'; ?>
 
         <div class="contenedor">
             <h1>Página Principal</h1>
@@ -24,31 +24,31 @@
 
         <section class="productos-destacados">
             <div class="producto">
-                <img src="../imgs/berrycharming.webp" alt="Berry Charming">
+                <img src="/SuperRosita/imgs/berrycharming.webp" alt="Berry Charming">
                 <h2>Nivea Berry Charming 50ml</h2>
                 <p>$2590</p>
             </div>
             <div class="producto">
-                <img src="../imgs/azucar.jpg"
+                <img src="/SuperRosita/imgs/azucar.jpg"
                     alt="Azucar Iansa">
                 <h2>1kg Azucar Iansa</h2>
                 <p>$990</p>
             </div>
             <div class="producto">
-                <img src="../imgs/lipton.webp"
+                <img src="/SuperRosita/imgs/lipton.webp"
                     alt="IcedTea x6">
                 <h2>Lipton Ice Tea Limon Sixpack</h2>
                 <p>$3990</p>
             </div>
             <div class="producto">
-                <img src="../imgs/bandejahuevos.jpg"
+                <img src="/SuperRosita/imgs/bandejahuevos.jpg"
                     alt="Bandeja Huevos">
                 <h2>20 Huevos Color</h2>
                 <p>$3000</p>
             </div>
         </section>
 
-        <div class="ver-mas"> <button onclick="location.href='./mas-productos.php'">Ver más productos</button> </div>
+        <div class="ver-mas"> <button onclick="location.href='/SuperRosita/mas-productos'">Ver más productos</button> </div>
 
         <div id="modal" class="modal">
             <div class="modal-content">

@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Más Productos - SuperRosita</title>
-    <link rel="stylesheet" href="../css/inicio.css">
-    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="/SuperRosita/css/inicio.css">
+    <link rel="stylesheet" href="/SuperRosita/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
-    <?php include './header.php'; ?>
+    <?php include __DIR__ . '/header.php'; ?>
 
     <div class="contenedor">
         <h1>Todos Los Productos</h1>
@@ -20,12 +20,12 @@
 
     <section class="productos-destacados">
         <div class="producto">
-            <img src="../imgs/berrycharming.webp" alt="Berry Charming">
+            <img src="/SuperRosita/imgs/berrycharming.webp" alt="Berry Charming">
             <h2>Nivea Berry Charming 50ml</h2>
             <p>$2590</p>
         </div>
         <div class="producto">
-            <img src="../imgs/lipton.webp" alt="IcedTea x6">
+            <img src="/SuperRosita/imgs/lipton.webp" alt="IcedTea x6">
             <h2>Lipton Ice Tea Limon Sixpack</h2>
             <p>$3990</p>
         </div>
@@ -33,7 +33,7 @@
     </section>
 
     <div class="ver-mas">
-        <button onclick="location.href='../index.php?redirect=inicio'">Volver a la Página
+        <button onclick="location.href='/SuperRosita/'">Volver a la Página
             Principal</button>
     </div>
 

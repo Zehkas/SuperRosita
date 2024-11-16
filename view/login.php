@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cliente SuperRosita</title>
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="/SuperRosita/css/login.css">
+    <link rel="stylesheet" href="/SuperRosita/css/global.css">
     <style>
         .centrar {
             display: flex;
@@ -18,12 +18,13 @@
 
 <body>
 
-    <?php include './header.php'; ?>
+    <?php include __DIR__ . '/header.php'; ?>
+
 
     <div class = "centrar">
         <div class = "contenedorLogin">
             <h2>Inicio De Sesión</h2>
-            <form action = "../index.php?action=login" method = "post">
+            <form action = "/SuperRosita/index.php?action=login" method = "post">
                 <div class = formInterior>
                     <label for="email">Correo:</label>
                     <input type="email" id="email" name="email" required>
@@ -34,7 +35,13 @@
                     <input type="submit" value = "Iniciar Sesión">
                 </div>
             </form>
-            <p style="text-align: center; margin-top: 10px;">¿No tienes una cuenta? <a href="./registro.php">Registrarse</a></p>
+            
+            <?php if (isset($_SESSION['error_login'])): ?>
+                <p class="error-message"><?php echo $_SESSION['error_login']; ?></p>
+                <?php unset($_SESSION['error_login']); ?>
+            <?php endif; ?>
+
+            <p style="text-align: center; margin-top: 10px;">¿No tienes una cuenta? <a href="/SuperRosita/registro">Registrarse</a></p>
         </div>
     </div>
 

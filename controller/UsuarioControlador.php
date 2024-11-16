@@ -27,10 +27,10 @@ class UsuarioControlador {
             $resultado = $usuario->agregarCliente($region, $correo, $nombre, $apellido1, $apellido2, $contrasena);
 
             if ($resultado) {
-                header("Location: ./view/success.php"); // Redirige a una página de éxito
+                header("Location: /SuperRosita/success"); // Redirige a una página de éxito
                 exit();
             } else {
-                header("Location: ./view/inicio.php"); // Cambiar la página para el error
+                header("Location: /SuperRosita/errorregistro"); // Cambiar la página para el error
                 exit();
             }
         }
@@ -46,10 +46,10 @@ class UsuarioControlador {
 
             if ($resultado) {
                 $_SESSION['usuario'] = $correo;
-                header("Location: ./view/success.php");
+                header("Location: /SuperRosita/success");
                 exit();
             } else {
-                header("Location: ./view/errorlogin.php");
+                header("Location: /SuperRosita/errorlogin");
                 exit();
             }
         }

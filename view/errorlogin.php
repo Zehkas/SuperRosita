@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error de Inicio de Sesión</title>
-    <link rel="stylesheet" href="../css/global.css"> <!-- Asegúrate de incluir tus estilos globales -->
+    <link rel="stylesheet" href="/SuperRosita/css/global.css"> <!-- Asegúrate de incluir tus estilos globales -->
     <style>
         /* Estilos para centrar el cuadro de error */
         .centrar {
@@ -46,6 +46,9 @@
     </style>
 </head>
 <body>
+
+    <?php include __DIR__ . '/header.php'; ?>
+    
     <div class="centrar">
         <div class="errorCuadro">
             <h2>Correo o contraseña incorrectos</h2>

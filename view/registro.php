@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro SuperRosita</title>
-    <link rel="stylesheet" href="../css/registro.css">
-    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="/SuperRosita/css/registro.css">
+    <link rel="stylesheet" href="/SuperRosita/css/global.css">
     <style>
         .centrar {
             display: flex;
@@ -17,11 +17,14 @@
 </head>
 
 <body>
-    <?php include './header.php'; ?>
+    
+    <?php include __DIR__ . '/header.php'; ?>
+
+
     <div class="centrar">
         <div class="contenedorRegistro">
             <h2>Registro en SuperRosita</h2>
-            <form action="../index.php?action=registro" method="post">
+            <form action="/SuperRosita/index.php?action=registro" method="post">
                 <div class="formInterior">
                     <label for="correo">Correo:</label>
                     <input type="email" id="correo" name="correo" required>
@@ -51,7 +54,7 @@
             </form>
 
             <div style="text-align: center; margin-top: 20px;">
-                <p>¿Ya tienes una cuenta? <a href="./login.php">Iniciar sesión</a></p>
+                <p>¿Ya tienes una cuenta? <a href="/SuperRosita/login">Iniciar sesión</a></p>
             </div>
             
         </div>
