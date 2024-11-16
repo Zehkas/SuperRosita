@@ -17,7 +17,6 @@
 </head>
 
 <body>
-
     <?php include __DIR__ . '/header.php'; ?>
 
 
@@ -37,7 +36,7 @@
             </form>
             
             <?php if (isset($_SESSION['error_login'])): ?>
-                <p class="error-message"><?php echo $_SESSION['error_login']; ?></p>
+                <p style="color: #FF0000"><?php echo $_SESSION['error_login']; ?></p>
                 <?php unset($_SESSION['error_login']); ?>
             <?php endif; ?>
 

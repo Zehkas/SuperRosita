@@ -8,6 +8,23 @@ if (session_status() === PHP_SESSION_NONE) {
     display: flex;
     gap: 10px;
 }
+.header {
+    align-items: center;
+    padding: 20px;
+    display: flex;
+    background-color: #E4A8CA;
+    justify-content: space-between;
+    border-bottom: 2px solid #000000;
+    align-items: center;
+}
+
+.logo {
+    cursor: pointer;
+    color: #000;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+}
+
 
 .logo super {
     margin-right: 8px;
