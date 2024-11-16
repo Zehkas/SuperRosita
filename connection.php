@@ -2,10 +2,10 @@
 class Connection {
     public function connect() {
         // Datos de conexión
-        $db_user = "bd_miguel";
-        $db_password = "miguel2003";
-        //$db_user = "ROSITA";
-        //$db_password = "superrosita";
+        //$db_user = "bd_miguel";
+        //$db_password = "miguel2003";
+        $db_user = "ROSITA";
+        $db_password = "superrosita";
         $db_host = "localhost";
         $db_port = "1521";
         $db_sid = "xe";
