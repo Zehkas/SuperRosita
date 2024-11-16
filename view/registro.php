@@ -11,7 +11,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 92vh;
+            min-height: 88vh;
         }
     </style>
 </head>
