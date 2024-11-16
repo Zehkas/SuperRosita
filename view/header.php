@@ -68,7 +68,9 @@ if (session_status() === PHP_SESSION_NONE) {
         <super class="fas fa-shopping-cart"></super>SuperRosita
     </div>
     <div class="botonesHeader">
-        <?php if (isset($_SESSION['usuario'])): ?>
+        <?php 
+        $rutaActual = $_SERVER['REQUEST_URI']; // Obtiene la URL actual
+        if (isset($_SESSION['usuario'])): ?>
             <div class="botonPerfil" onclick="location.href='/SuperRosita/perfil'">
                 <i class="fas fa-user"></i> Ver Mi Perfil
             </div>
@@ -80,13 +82,17 @@ if (session_status() === PHP_SESSION_NONE) {
             </div>
 
         <?php else: ?>
-            <div class="botonRegistro" onclick="location.href='/SuperRosita/registro'">
-                <i class="fas fa-user-plus"></i> Registrarse
-            </div>
+            <?php if (strpos($rutaActual, '/SuperRosita/registro') === false && strpos($rutaActual, '/SuperRosita/login') === false):?>
+                <div class="botonRegistro" onclick="location.href='/SuperRosita/registro'">
+                    <i class="fas fa-user-plus"></i> Registrarse
+                </div>
+              
+                <div class="botonInicioSesion" onclick="location.href='/SuperRosita/login'">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </div> 
+            <?php endif; ?> 
+        <?php endif; ?> 
 
-            <div class="botonInicioSesion" onclick="location.href='/SuperRosita/login'">
-                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
-            </div>
-        <?php endif; ?>
     </div>
 </header>
+
