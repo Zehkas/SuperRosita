@@ -1,3 +1,15 @@
+<?php
+require_once __DIR__ . '/../controller/ProductoControlador.php';
+require_once __DIR__ . '/../connection.php';
+
+// Crear conexión a la base de datos
+$dbConnection = (new Connection())->connect();
+
+// Crear instancia del controlador con la conexión a la base de datos
+$productoControlador = new ProductoControlador($dbConnection);
+$productos = $productoControlador->MostrarProductos();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -19,17 +31,21 @@
     </div>
 
     <section class="productos-destacados">
-        <div class="producto">
-            <img src="/SuperRosita/imgs/berrycharming.webp" alt="Berry Charming">
-            <h2>Nivea Berry Charming 50ml</h2>
-            <p>$2590</p>
-        </div>
-        <div class="producto">
-            <img src="/SuperRosita/imgs/lipton.webp" alt="IcedTea x6">
-            <h2>Lipton Ice Tea Limon Sixpack</h2>
-            <p>$3990</p>
-        </div>
-        <!-- Resto de productos -->
+        <?php foreach ($productos as $producto): ?>
+            <div class="producto">
+                <?php if (isset($producto['NOMBRE_PRODUCTO'], $producto['PRECIO_VENTA_PRODUCTO'])): ?>
+                    <?php 
+                        // Convertir el nombre del producto a minúsculas y reemplazar espacios por guiones bajos
+                        $nombreImagen = strtolower(str_replace(' ', '_', $producto['NOMBRE_PRODUCTO'])) . '.png'; 
+                    ?>
+                    <img src="/SuperRosita/imgs/<?php echo htmlspecialchars($nombreImagen); ?>" alt="<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>">
+                    <h2><?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?></h2>
+                    <p><?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?></p>
+                <?php else: ?>
+                    <p>Datos del producto no disponibles</p>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
     </section>
 
     <div class="ver-mas">
