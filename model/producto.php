@@ -31,5 +31,16 @@ class Producto {
             die("Error al agregar producto: " . $e->getMessage());
         }
     }
+    public function mostrarProductos() {
+        $sql = "SELECT * FROM MMVK_PRODUCTO";
+    
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Error al mostrar productos: " . $e->getMessage());
+        }
+    }
 }
 ?>

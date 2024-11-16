@@ -78,6 +78,32 @@ class Usuario {
             return false;
         }
     }
-    
+
+    public function obtenerDatos($correo) {
+        try {
+            if ($this->db === null) {
+                throw new Exception("Error de conexión a la base de datos.");
+            }
+
+            $sql = "SELECT NOMBRE_CLIENTE, APELLIDO1_CLIENTE, APELLIDO2_CLIENTE
+                    FROM MMVK_CLIENTES 
+                    WHERE CORREO_CLIENTE = :email"; 
+            $stmt = oci_parse($this->db, $sql);
+
+            oci_bind_by_name($stmt, ":email", $correo);
+
+            oci_execute($stmt);
+
+            if ($row = oci_fetch_assoc($stmt)) {
+                return $row;
+            } else {
+                return null;
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }   
+
 }
 ?>

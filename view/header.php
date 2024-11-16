@@ -70,9 +70,11 @@ if (session_status() === PHP_SESSION_NONE) {
         <?php 
         $rutaActual = $_SERVER['REQUEST_URI']; // Obtiene la URL actual
         if (isset($_SESSION['usuario'])): ?>
+        <?php if (strpos($rutaActual, '/SuperRosita/perfil') === false):?>
             <div class="botonPerfil" onclick="location.href='/SuperRosita/perfil'">
                 <i class="fas fa-user"></i> Ver Mi Perfil
             </div>
+        <?php endif; ?> 
             <div class="botonCarrito" onclick="location.href='/SuperRosita/carrito'">
                 <i class="fas fa-shopping-cart"></i> Ver Mi Carrito
             </div>

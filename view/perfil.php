@@ -1,0 +1,40 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Perfil</title>
+  <link rel="stylesheet" href="/SuperRosita/css/global.css">
+  <link rel="stylesheet" href="/SuperRosita/css/perfil.css">
+</head>
+<body>
+
+  <?php include __DIR__ . '/header.php'; ?>
+
+  <div class="contenedor">
+    <aside class="menuLateral">
+        <ul>
+            <li><a href="#">General</a></li>
+            <li><a href="#">Historial de compras</a></li>
+            <li><a href="#">Devolucion</a></li>
+        </ul>
+    </aside>
+
+    <main class="contenido">
+        <h2>
+          <?php 
+            if (isset($_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
+              echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+            } 
+          ?>
+        </h2>
+    </main>
+
+  </div>
+</body>
+</html>

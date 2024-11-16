@@ -1,0 +1,50 @@
+.contenedor {
+    display: flex;
+    height: calc(100vh - 80px);
+    font-family: Arial, sans-serif;
+}
+
+.menuLateral {
+    width: 250px;
+    background-color: #fae4f0;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.menuLateral ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menuLateral ul li {
+    margin-bottom: 15px;
+}
+
+.menuLateral ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menuLateral ul li a:hover {
+    background-color: #e4a8ca;
+    color: #fff;
+}
+
+.contenido {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.contenido h2 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+}

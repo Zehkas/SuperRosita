@@ -14,11 +14,11 @@ class RedirectControlador {
             case 'success':
                 require_once __DIR__ . '/../view/success.php';
                 break;
-            case 'errorregistro':
-                require_once __DIR__ . '/../view/errorregistro.php';
-                break;
             case 'inicio':
                 require_once __DIR__ . '/../view/inicio.php';
+                break;
+            case 'perfil':
+                require_once __DIR__ . '/../view/perfil.php';
                 break;
             case 'mas-productos':
                 require_once __DIR__ . '/../view/mas-productos.php';
