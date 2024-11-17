@@ -9,9 +9,9 @@ class CarritoControlador {
         $this->db = $dbConnection;
     }
 
-    public function AgregarAlCarrito($codigoProducto, $idCliente, $cantidad = 1) {
+    public function AgregarAlCarrito($codigoProducto, $idCliente, $cantidad = 1, $precio) {
         $carrito = new Carrito($this->db);
-        $carrito->agregarProducto($codigoProducto, $idCliente, $cantidad);
+        $carrito->agregarProducto($codigoProducto, $idCliente, $cantidad, $precio);
     }
 
     public function obtenerCarritoPendiente($codigoCliente) {

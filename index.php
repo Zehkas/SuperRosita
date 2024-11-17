@@ -38,27 +38,42 @@ if (isset($_GET['action'])) {
             $cantidad = $data['cantidad'];
             $idCliente = $_SESSION['codigo_cliente'];
 
-            $productoControlador->AgregarAlCarrito($codigoProducto, $idCliente, $cantidad);
-
-            echo json_encode(['success' => true]);
+            if ($idCliente) {
+                $productoControlador->AgregarAlCarrito($codigoProducto, $idCliente, $cantidad);
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Cliente no autenticado']);
+            }
             exit();
         case 'verCarrito':
             $idCliente = $_SESSION['codigo_cliente'];
-            $carrito = $carritoControlador->obtenerCarritoPendiente($idCliente);
-            echo json_encode($carrito);
+            if ($idCliente) {
+                $carrito = $carritoControlador->obtenerCarritoPendiente($idCliente);
+                echo json_encode($carrito);
+            } else {
+                echo json_encode([]);
+            }
             exit();
-        case 'eliminarProducto':
+        case 'eliminarProductoCarrito':
             $data = json_decode(file_get_contents('php://input'), true);
             $codigoProducto = $data['codigoProducto'];
             $idCliente = $_SESSION['codigo_cliente'];
 
-            $carritoControlador->actualizarEstadoProducto($codigoProducto, $idCliente, 3);
-            echo json_encode(['success' => true]);
+            if ($idCliente) {
+                $carritoControlador->actualizarEstadoProducto($codigoProducto, $idCliente, 3);
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Cliente no autenticado']);
+            }
             exit();
         case 'completarCompra':
             $idCliente = $_SESSION['codigo_cliente'];
-            $carritoControlador->completarCompra($idCliente);
-            echo json_encode(['success' => true]);
+            if ($idCliente) {
+                $carritoControlador->completarCompra($idCliente);
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Cliente no autenticado']);
+            }
             exit();
         default:
             header('Location: ./view/inicio.php');

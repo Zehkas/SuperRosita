@@ -85,7 +85,7 @@ class Usuario {
                 throw new Exception("Error de conexión a la base de datos.");
             }
 
-            $sql = "SELECT NOMBRE_CLIENTE, APELLIDO1_CLIENTE, APELLIDO2_CLIENTE
+            $sql = "SELECT NOMBRE_CLIENTE, APELLIDO1_CLIENTE, APELLIDO2_CLIENTE, CODIGO_CLIENTE
                     FROM MMVK_CLIENTES 
                     WHERE CORREO_CLIENTE = :email"; 
             $stmt = oci_parse($this->db, $sql);

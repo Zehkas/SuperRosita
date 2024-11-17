@@ -1,18 +1,21 @@
 <?php
 require_once './connection.php';
 
-class Producto {
+class Producto
+{
     private $db;
 
-    public function __construct($dbConnection) {
+    public function __construct($dbConnection)
+    {
         $this->db = $dbConnection;
     }
 
     // Método para agregar un nuevo producto
-    public function agregarProducto($nombre, $peso, $fecha_fabricacion, $precio_compra, $precio_venta, $existencia, $codigo_pais, $codigo_departamento) {
+    public function agregarProducto($nombre, $peso, $fecha_fabricacion, $precio_compra, $precio_venta, $existencia, $codigo_pais, $codigo_departamento)
+    {
         $sql = "INSERT INTO MMVK_PRODUCTO(NOMBRE_PRODUCTO, PESO_PRODUCTO, FECHA_FABRICACION_PRODUCTO, PRECIO_COMPRA_PRODUCTO, PRECIO_VENTA_PRODUCTO, EXISTENCIA_PRODUCTO, CODIGO_PAIS_ORIGEN_PRODUCTO, CODIGO_DEPARTAMENTO)
                 VALUES (:nombre, :peso, :fecha_fabricacion, :precio_compra, :precio_venta, :existencia, :codigo_pais, :codigo_departamento)";
-        
+
         $stmt = oci_parse($this->db, $sql);
 
         // Asignar los parámetros
@@ -39,7 +42,8 @@ class Producto {
     }
 
     // Método para editar un producto existente
-    public function editarProducto($codigo_producto, $nombre, $peso, $fecha_fabricacion, $precio_compra, $precio_venta, $existencia, $codigo_pais, $codigo_departamento) {
+    public function editarProducto($codigo_producto, $nombre, $peso, $fecha_fabricacion, $precio_compra, $precio_venta, $existencia, $codigo_pais, $codigo_departamento)
+    {
         $sql = "UPDATE MMVK_PRODUCTO SET
                 NOMBRE_PRODUCTO = :nombre,
                 PESO_PRODUCTO = :peso,
@@ -50,7 +54,7 @@ class Producto {
                 CODIGO_PAIS_ORIGEN_PRODUCTO = :codigo_pais,
                 CODIGO_DEPARTAMENTO = :codigo_departamento
                 WHERE CODIGO_PRODUCTO = :codigo_producto";
-        
+
         $stmt = oci_parse($this->db, $sql);
 
         // Asignar los parámetros
@@ -78,9 +82,10 @@ class Producto {
     }
 
     // Método para eliminar un producto existente
-    public function eliminarProducto($codigo_producto) {
+    public function eliminarProducto($codigo_producto)
+    {
         $sql = "DELETE FROM MMVK_PRODUCTO WHERE CODIGO_PRODUCTO = :codigo_producto";
-        
+
         $stmt = oci_parse($this->db, $sql);
 
         // Asignar el parámetro
@@ -100,7 +105,8 @@ class Producto {
     }
 
     // Método para obtener todos los productos
-    public function obtenerProductos() {
+    public function obtenerProductos()
+    {
         $sql = "SELECT CODIGO_PRODUCTO, NOMBRE_PRODUCTO, PRECIO_VENTA_PRODUCTO FROM MMVK_PRODUCTO";
         $stmt = oci_parse($this->db, $sql);
 
@@ -115,6 +121,21 @@ class Producto {
         } catch (Exception $e) {
             $error = oci_error($this->db);
             die("Error al obtener productos: " . $error['message']);
+        }
+    }
+    public function obtenerProductoPorCodigo($codigoProducto)
+    {
+        try {
+            $sql = "SELECT * FROM MMVK_PRODUCTO WHERE CODIGO_PRODUCTO = :codigo_producto";
+            $stmt = oci_parse($this->db, $sql);
+            oci_bind_by_name($stmt, ':codigo_producto', $codigoProducto);
+            oci_execute($stmt);
+            $producto = oci_fetch_assoc($stmt);
+            oci_free_statement($stmt);
+            return $producto;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
         }
     }
 }

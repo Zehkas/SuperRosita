@@ -48,6 +48,7 @@ class UsuarioControlador {
             $datos = $usuario->obtenerDatos($correo);
 
             if ($resultado) {
+                $_SESSION['codigo_cliente'] = $datos['CODIGO_CLIENTE'];
                 $_SESSION['nombre'] = $datos['NOMBRE_CLIENTE'];
                 $_SESSION['apellido1'] = $datos['APELLIDO1_CLIENTE'];
                 $_SESSION['apellido2'] = $datos['APELLIDO2_CLIENTE'];

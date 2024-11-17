@@ -82,26 +82,35 @@ class ProductoControlador
         $producto = new Producto($this->db);
         return $producto->obtenerProductos();
     }
-
     public function AgregarAlCarrito($codigoProducto, $idCliente, $cantidad = 1)
     {
+        $producto = new Producto($this->db);
         $carrito = new Carrito($this->db);
-        $carrito->agregarProducto($codigoProducto, $idCliente, $cantidad);
+
+        $productoInfo = $producto->obtenerProductoPorCodigo($codigoProducto);
+
+        if ($productoInfo) {
+            $precioTotal = $productoInfo['PRECIO_VENTA_PRODUCTO'] * $cantidad;
+            $carrito->agregarProducto($codigoProducto, $idCliente, $cantidad, $precioTotal);
+        } else {
+            throw new Exception("Producto no encontrado");
+        }
     }
+
 
 
     // Método para eliminar un producto del carrito (cambiar estado a 3)
     public function EliminarDelCarrito($codigoCarrito, $codigoProducto)
     {
         $carrito = new Carrito($this->db);
-        $carrito->actualizarEstado($codigoCarrito, $codigoProducto, 3);
+        $carrito->actualizarEstadoProducto($codigoCarrito, $codigoProducto, 3);
     }
 
     // Método para completar la compra (cambiar estado a 1)
     public function CompletarCompra($codigoCarrito, $codigoProducto)
     {
         $carrito = new Carrito($this->db);
-        $carrito->actualizarEstado($codigoCarrito, $codigoProducto, 1);
+        $carrito->actualizarEstadoProducto($codigoCarrito, $codigoProducto, 1);
     }
 
 }

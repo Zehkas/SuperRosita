@@ -20,6 +20,62 @@ $productos = $productoControlador->MostrarProductos();
     <link rel="stylesheet" href="/SuperRosita/css/inicio.css">
     <link rel="stylesheet" href="/SuperRosita/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fae4f0;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .contador-boton {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #D16D8C;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .contador-boton:hover {
+            background-color: #B45F75;
+        }
+        #addToCart {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #addToCart:hover {
+            background-color: #555;
+        }
+        #success-message {
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,7 +95,7 @@ $productos = $productoControlador->MostrarProductos();
                     ?>
                     <img src="/SuperRosita/imgs/<?php echo htmlspecialchars($nombreImagen); ?>" alt="<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>">
                     <h2><?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?></h2>
-                    <p><?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?></p>
+                    <p>$<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?></p>
                 <?php else: ?>
                     <p>Datos del producto no disponibles</p>
                 <?php endif; ?>
@@ -62,7 +118,7 @@ $productos = $productoControlador->MostrarProductos();
                 <button id="incremento" class="contador-boton">+</button>
             </div>
             <button id="addToCart"><i class="fas fa-shopping-bag"></i> Añadir al Carrito</button>
-            <p id="success-message" style="display:none; color: green;">Producto agregado exitosamente</p>
+            <p id="success-message">Producto agregado exitosamente</p>
         </div>
     </div>
 
@@ -73,7 +129,7 @@ $productos = $productoControlador->MostrarProductos();
             productoSeleccionado = codigo;
             document.getElementById('modal-img').src = "/SuperRosita/imgs/" + nombre.toLowerCase().replace(/\s/g, '_') + ".png";
             document.getElementById('modal-title').innerText = nombre;
-            document.getElementById('modal-price').innerText = precio;
+            document.getElementById('modal-price').innerText = "$" + precio;
             document.getElementById('cantidad').innerText = 1;
             document.getElementById('modal').style.display = 'block';
             document.getElementById('success-message').style.display = 'none';
