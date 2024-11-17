@@ -2,6 +2,7 @@
 require_once './controller/UsuarioControlador.php';
 require_once './controller/ProductoControlador.php';
 require_once './controller/RedirectControlador.php';
+require_once './controller/CarritoControlador.php';
 require_once './connection.php';
 
 // Crear conexión a la base de datos
@@ -11,6 +12,7 @@ $dbConnection = (new Connection())->connect();
 $usuarioControlador = new UsuarioControlador($dbConnection);
 $productoControlador = new ProductoControlador($dbConnection);
 $redirectControlador = new RedirectControlador();
+$carritoControlador = new CarritoControlador($dbConnection);
 
 // Acciones relacionadas con el usuario
 if (isset($_GET['action'])) {
@@ -38,6 +40,24 @@ if (isset($_GET['action'])) {
 
             $productoControlador->AgregarAlCarrito($codigoProducto, $idCliente, $cantidad);
 
+            echo json_encode(['success' => true]);
+            exit();
+        case 'verCarrito':
+            $idCliente = $_SESSION['codigo_cliente'];
+            $carrito = $carritoControlador->obtenerCarritoPendiente($idCliente);
+            echo json_encode($carrito);
+            exit();
+        case 'eliminarProducto':
+            $data = json_decode(file_get_contents('php://input'), true);
+            $codigoProducto = $data['codigoProducto'];
+            $idCliente = $_SESSION['codigo_cliente'];
+
+            $carritoControlador->actualizarEstadoProducto($codigoProducto, $idCliente, 3);
+            echo json_encode(['success' => true]);
+            exit();
+        case 'completarCompra':
+            $idCliente = $_SESSION['codigo_cliente'];
+            $carritoControlador->completarCompra($idCliente);
             echo json_encode(['success' => true]);
             exit();
         default:
