@@ -101,7 +101,7 @@ class Producto {
 
     // Método para obtener todos los productos
     public function obtenerProductos() {
-        $sql = "SELECT NOMBRE_PRODUCTO, PRECIO_VENTA_PRODUCTO FROM MMVK_PRODUCTO";
+        $sql = "SELECT CODIGO_PRODUCTO, NOMBRE_PRODUCTO, PRECIO_VENTA_PRODUCTO FROM MMVK_PRODUCTO";
         $stmt = oci_parse($this->db, $sql);
 
         try {

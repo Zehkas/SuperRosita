@@ -32,10 +32,9 @@ $productos = $productoControlador->MostrarProductos();
 
     <section class="productos-destacados">
         <?php foreach ($productos as $producto): ?>
-            <div class="producto">
-                <?php if (isset($producto['NOMBRE_PRODUCTO'], $producto['PRECIO_VENTA_PRODUCTO'])): ?>
+            <div class="producto" onclick="mostrarModal('<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['CODIGO_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?>')">
+                <?php if (isset($producto['NOMBRE_PRODUCTO'], $producto['PRECIO_VENTA_PRODUCTO'], $producto['CODIGO_PRODUCTO'])): ?>
                     <?php 
-                        // Convertir el nombre del producto a minúsculas y reemplazar espacios por guiones bajos
                         $nombreImagen = strtolower(str_replace(' ', '_', $producto['NOMBRE_PRODUCTO'])) . '.png'; 
                     ?>
                     <img src="/SuperRosita/imgs/<?php echo htmlspecialchars($nombreImagen); ?>" alt="<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>">
@@ -49,8 +48,7 @@ $productos = $productoControlador->MostrarProductos();
     </section>
 
     <div class="ver-mas">
-        <button onclick="location.href='/SuperRosita/'">Volver a la Página
-            Principal</button>
+        <button onclick="location.href='/SuperRosita/'">Volver a la Página Principal</button>
     </div>
 
     <div id="modal" class="modal">
@@ -64,33 +62,35 @@ $productos = $productoControlador->MostrarProductos();
                 <button id="incremento" class="contador-boton">+</button>
             </div>
             <button id="addToCart"><i class="fas fa-shopping-bag"></i> Añadir al Carrito</button>
+            <p id="success-message" style="display:none; color: green;">Producto agregado exitosamente</p>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.producto').forEach(item => {
-            item.addEventListener('click', event => {
-                const imgSrc = item.querySelector('img').src;
-                const title = item.querySelector('h2').innerText;
-                const price = item.querySelector('p').innerText;
-                // Actualizar contenido de la ventana modal
-                document.getElementById('modal-img').src = imgSrc;
-                document.getElementById('modal-title').innerText = title;
-                document.getElementById('modal-price').innerText = price;
-                document.getElementById('cantidad').innerText = 1;
-                document.getElementById('modal').style.display = 'block';
-            });
-        });
+        let productoSeleccionado = null;
+
+        function mostrarModal(nombre, codigo, precio) {
+            productoSeleccionado = codigo;
+            document.getElementById('modal-img').src = "/SuperRosita/imgs/" + nombre.toLowerCase().replace(/\s/g, '_') + ".png";
+            document.getElementById('modal-title').innerText = nombre;
+            document.getElementById('modal-price').innerText = precio;
+            document.getElementById('cantidad').innerText = 1;
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+        }
+
         window.addEventListener('click', event => {
             if (event.target == document.getElementById('modal')) {
                 document.getElementById('modal').style.display = 'none';
             }
         });
+
         document.getElementById('incremento').addEventListener('click', () => {
             const cantidadElem = document.getElementById('cantidad');
             let cantidad = parseInt(cantidadElem.innerText, 10);
             cantidadElem.innerText = ++cantidad;
         });
+
         document.getElementById('decremento').addEventListener('click', () => {
             const cantidadElem = document.getElementById('cantidad');
             let cantidad = parseInt(cantidadElem.innerText, 10);
@@ -98,7 +98,38 @@ $productos = $productoControlador->MostrarProductos();
                 cantidadElem.innerText = --cantidad;
             }
         });
+
+        document.getElementById('addToCart').addEventListener('click', () => {
+            const cantidad = parseInt(document.getElementById('cantidad').innerText, 10);
+            agregarAlCarrito(productoSeleccionado, cantidad);
+        });
+
+        function agregarAlCarrito(codigoProducto, cantidad) {
+            fetch('/SuperRosita/index.php?action=agregarAlCarrito', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    codigoProducto: codigoProducto,
+                    cantidad: cantidad
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('success-message').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('modal').style.display = 'none';
+                    }, 2000); // Cierra la ventana emergente después de 2 segundos
+                } else {
+                    alert('Error al agregar el producto al carrito');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
     </script>
+
 </body>
 
 </html>

@@ -30,6 +30,16 @@ if (isset($_GET['action'])) {
         case 'eliminarProducto':
             $productoControlador->EliminarProducto();
             break;
+        case 'agregarAlCarrito':
+            $data = json_decode(file_get_contents('php://input'), true);
+            $codigoProducto = $data['codigoProducto'];
+            $cantidad = $data['cantidad'];
+            $idCliente = $_SESSION['codigo_cliente'];
+
+            $productoControlador->AgregarAlCarrito($codigoProducto, $idCliente, $cantidad);
+
+            echo json_encode(['success' => true]);
+            exit();
         default:
             header('Location: ./view/inicio.php');
             exit();

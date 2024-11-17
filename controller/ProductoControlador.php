@@ -1,15 +1,18 @@
 <?php
 require_once './model/producto.php';
 
-class ProductoControlador {
+class ProductoControlador
+{
     private $db;
 
-    public function __construct($dbConnection) {
+    public function __construct($dbConnection)
+    {
         $this->db = $dbConnection;
     }
 
     // Método para registrar un nuevo producto
-    public function RegistroProducto() {
+    public function RegistroProducto()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nombre = $_POST['nombre_producto'];
             $peso = $_POST['peso_producto'];
@@ -32,7 +35,8 @@ class ProductoControlador {
     }
 
     // Método para editar un producto existente
-    public function EditarProducto() {
+    public function EditarProducto()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $codigo_producto = $_POST['codigo_producto'];
             $nombre = $_POST['nombre_producto'];
@@ -56,7 +60,8 @@ class ProductoControlador {
     }
 
     // Método para eliminar un producto existente
-    public function EliminarProducto() {
+    public function EliminarProducto()
+    {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $codigo_producto = $_POST['codigo_producto'];
 
@@ -72,9 +77,32 @@ class ProductoControlador {
     }
 
     // Método para obtener todos los productos
-    public function MostrarProductos() {
+    public function MostrarProductos()
+    {
         $producto = new Producto($this->db);
         return $producto->obtenerProductos();
     }
+
+    public function AgregarAlCarrito($codigoProducto, $idCliente, $cantidad = 1)
+    {
+        $carrito = new Carrito($this->db);
+        $carrito->agregarProducto($codigoProducto, $idCliente, $cantidad);
+    }
+
+
+    // Método para eliminar un producto del carrito (cambiar estado a 3)
+    public function EliminarDelCarrito($codigoCarrito, $codigoProducto)
+    {
+        $carrito = new Carrito($this->db);
+        $carrito->actualizarEstado($codigoCarrito, $codigoProducto, 3);
+    }
+
+    // Método para completar la compra (cambiar estado a 1)
+    public function CompletarCompra($codigoCarrito, $codigoProducto)
+    {
+        $carrito = new Carrito($this->db);
+        $carrito->actualizarEstado($codigoCarrito, $codigoProducto, 1);
+    }
+
 }
 ?>

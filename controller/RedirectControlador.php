@@ -23,9 +23,13 @@ class RedirectControlador {
             case 'mas-productos':
                 require_once __DIR__ . '/../view/mas-productos.php';
                 break;
+            case 'carrito': 
+                require_once __DIR__ . '/../view/carrito.php';
+                break;
             default:
                 require_once __DIR__ . '/../view/404.php';
                 break;
         }
     }
 }
+?>
