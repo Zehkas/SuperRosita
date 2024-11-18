@@ -44,22 +44,47 @@ class UsuarioControlador {
             
 
             $usuario = new Usuario();
-            $resultado = $usuario->validarCliente($correo, $contrasena);
-            $datos = $usuario->obtenerDatos($correo);
+            $esTrabajador = str_ends_with($correo, '@superrosita.cl');
 
-            if ($resultado) {
-                $_SESSION['codigo_cliente'] = $datos['CODIGO_CLIENTE'];
-                $_SESSION['nombre'] = $datos['NOMBRE_CLIENTE'];
-                $_SESSION['apellido1'] = $datos['APELLIDO1_CLIENTE'];
-                $_SESSION['apellido2'] = $datos['APELLIDO2_CLIENTE'];
-                $_SESSION['usuario'] = $correo;
-                header("Location: /SuperRosita/success");
-                exit();
+            if ($esTrabajador){
+
+                $resultado = $usuario->validarTrabajador($correo, $contrasena);
+                $datos = $usuario->obtenerDatosTrabajador($correo);
+
+                if ($resultado){
+
+                    $_SESSION['codigo_trabajador'] = $datos['CODIGO_TRABAJADOR'];
+                    $_SESSION['nombre'] = $datos['NOMBRE_TRABAJADOR'];
+                    $_SESSION['apellido1'] = $datos['APELLIDO1_TRABAJADOR'];
+                    $_SESSION['apellido2'] = $datos['APELLIDO2_TRABAJADOR'];
+                    $_SESSION['fecha_contrato'] = $datosTrabajador['FECHA_CONTRATO_TRABAJADOR'];
+                    $_SESSION['codigo_departamento'] = $datosTrabajador['CODIGO_DEPARTAMENTO'];
+                    $_SESSION['codigo_cargo'] = $datosTrabajador['CODIGO_CARGO_TRABAJADOR'];
+                    $_SESSION['usuario'] = $correo;
+                    header("Location: /SuperRosita/success");
+                    exit();
+                }
+
             } else {
-                $_SESSION['error_login'] = "Error al iniciar sesion, Correo o contraseña incorrectos";
-                header("Location: /SuperRosita/login");
-                exit();
+
+                $resultado = $usuario->validarCliente($correo, $contrasena);
+                $datos = $usuario->obtenerDatosCliente($correo);
+
+                if ($resultado) {
+                    $_SESSION['codigo_cliente'] = $datos['CODIGO_CLIENTE'];
+                    $_SESSION['nombre'] = $datos['NOMBRE_CLIENTE'];
+                    $_SESSION['apellido1'] = $datos['APELLIDO1_CLIENTE'];
+                    $_SESSION['apellido2'] = $datos['APELLIDO2_CLIENTE'];
+                    $_SESSION['usuario'] = $correo;
+                    header("Location: /SuperRosita/success");
+                    exit();
+                }
             }
+
+
+            $_SESSION['error_login'] = "Error al iniciar sesion, Correo o contraseña incorrectos";
+            header("Location: /SuperRosita/login");
+            exit();
         }
     }
 }

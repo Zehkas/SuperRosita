@@ -79,7 +79,7 @@ class Usuario {
         }
     }
 
-    public function obtenerDatos($correo) {
+    public function obtenerDatosCliente($correo) {
         try {
             if ($this->db === null) {
                 throw new Exception("Error de conexión a la base de datos.");
@@ -103,7 +103,61 @@ class Usuario {
             echo "Error: " . $e->getMessage();
             return null;
         }
-    }   
+    }
+    
+    public function validarTrabajador($correo, $contrasena){
+        try {
+            if ($this->db === null) {
+                throw new Exception("Error de conexión a la base de datos.");
+            }
+              
+            
+            $sql = "SELECT COUNT(*) AS TOTAL FROM MMVK_TRABAJADOR WHERE CORREO_TRABAJADOR = :email AND CONTRASENA_CORREO_TRABAJADOR = :password";
+            $stmt = oci_parse($this->db, $sql);
 
+            oci_bind_by_name($stmt, ':email', $correo);
+            oci_bind_by_name($stmt, ':password', $contrasena);  
+            
+            oci_execute($stmt);
+
+            $row = oci_fetch_assoc($stmt);
+            $count = $row['TOTAL'];
+            
+            oci_free_statement($stmt);           
+
+            return $count > 0;
+
+
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function obtenerDatosTrabajador($correo){
+        try {
+            if ($this->db === null) {
+                throw new Exception("Error de conexión a la base de datos.");
+            }
+
+            $sql = "SELECT CODIGO_TRABAJADOR, NOMBRE_TRABAJADOR, APELLIDO1_TRABAJADOR, APELLIDO2_TRABAJADOR, FECHA_CONTRATO_TRABAJADOR, CODIGO_DEPARTAMENTO, CODIGO_CARGO_TRABAJADOR
+                    FROM MMVK_TRABAJADOR
+                    WHERE CORREO_TRABAJADOR = :email"; 
+            $stmt = oci_parse($this->db, $sql);
+
+            oci_bind_by_name($stmt, ":email", $correo);
+
+            oci_execute($stmt);
+
+            if ($row = oci_fetch_assoc($stmt)) {
+                return $row;
+            } else {
+                return null;
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
 }
 ?>
