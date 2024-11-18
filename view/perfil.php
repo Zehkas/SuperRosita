@@ -19,9 +19,10 @@ if (session_status() === PHP_SESSION_NONE) {
   <div class="contenedor">
     <aside class="menuLateral">
         <ul>
-            <li><a href="#">General</a></li>
-            <li><a href="#">Historial de compras</a></li>
-            <li><a href="#">Devolucion</a></li>
+            <li><a href="?seccion=general">General</a></li>
+            <li><a href="?seccion=historial">Historial de compras</a></li>
+            <li><a href="?seccion=devolucion">Devolucion</a></li>
+            <li><a href="?seccion=ajustes">Ajustes</a></li>
         </ul>
     </aside>
 
@@ -33,8 +34,39 @@ if (session_status() === PHP_SESSION_NONE) {
             } 
           ?>
         </h2>
-    </main>
 
+          <?php 
+          
+          $seccion = isset($_GET['seccion']) ? $_GET['seccion'] : 'general';
+
+          switch($seccion){
+            case 'general':
+              echo  "<section>
+                      <h2>General</h2>
+                    </section>";
+              break;
+
+            case 'historial':
+              echo  "<section>
+                      <h2>Historial Compras</h2>
+                    </section>";
+            break;
+
+            case 'devolucion':
+              echo  "<section>
+                      <h2>Devolucion</h2>
+                    </section>";
+            break;
+
+            case 'ajustes':
+              echo  "<section>
+                      <h2>Ajustes</h2>
+                    </section>";
+            break;
+          }
+
+          ?>
+    </main>
   </div>
 </body>
 </html>
