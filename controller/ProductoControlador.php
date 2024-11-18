@@ -80,7 +80,7 @@ class ProductoControlador
     public function MostrarProductos()
     {
         $producto = new Producto($this->db);
-        return $producto->obtenerProductos();
+        return $producto->obtenerTodosLosProductos();
     }
     public function AgregarAlCarrito($codigoProducto, $idCliente, $cantidad = 1)
     {
@@ -97,7 +97,11 @@ class ProductoControlador
         }
     }
 
-
+    public function MostrarProductosAleatorios($cantidad)
+    {
+        $producto = new Producto($this->db);
+        return $producto->obtenerProductosAleatorios($cantidad);
+    }
 
     // Método para eliminar un producto del carrito (cambiar estado a 3)
     public function EliminarDelCarrito($codigoCarrito, $codigoProducto)

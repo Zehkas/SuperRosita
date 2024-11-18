@@ -123,6 +123,47 @@ class Producto
             die("Error al obtener productos: " . $error['message']);
         }
     }
+        public function obtenerTodosLosProductos() {
+            try {
+                $sql = "SELECT * FROM MMVK_PRODUCTO";
+                $stmt = oci_parse($this->db, $sql);
+                oci_execute($stmt);
+    
+                $productos = [];
+                while ($row = oci_fetch_assoc($stmt)) {
+                    $productos[] = $row;
+                }
+    
+                oci_free_statement($stmt);
+                return $productos;
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+                return [];
+            }
+        }
+    
+        // Obtener productos aleatorios
+        public function obtenerProductosAleatorios($cantidad) {
+            try {
+                $sql = "SELECT * FROM (
+                            SELECT * FROM MMVK_PRODUCTO ORDER BY DBMS_RANDOM.VALUE
+                        ) WHERE ROWNUM <= :cantidad";
+                $stmt = oci_parse($this->db, $sql);
+                oci_bind_by_name($stmt, ':cantidad', $cantidad);
+                oci_execute($stmt);
+    
+                $productos = [];
+                while ($row = oci_fetch_assoc($stmt)) {
+                    $productos[] = $row;
+                }
+    
+                oci_free_statement($stmt);
+                return $productos;
+            } catch (Exception $e) {
+                echo "Error: " . $e->getMessage();
+                return [];
+            }
+        }
     public function obtenerProductoPorCodigo($codigoProducto)
     {
         try {
