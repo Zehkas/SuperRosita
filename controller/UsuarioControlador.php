@@ -57,9 +57,9 @@ class UsuarioControlador {
                     $_SESSION['nombre'] = $datos['NOMBRE_TRABAJADOR'];
                     $_SESSION['apellido1'] = $datos['APELLIDO1_TRABAJADOR'];
                     $_SESSION['apellido2'] = $datos['APELLIDO2_TRABAJADOR'];
-                    $_SESSION['fecha_contrato'] = $datosTrabajador['FECHA_CONTRATO_TRABAJADOR'];
-                    $_SESSION['codigo_departamento'] = $datosTrabajador['CODIGO_DEPARTAMENTO'];
-                    $_SESSION['codigo_cargo'] = $datosTrabajador['CODIGO_CARGO_TRABAJADOR'];
+                    $_SESSION['fecha_contrato'] = $datos['FECHA_CONTRATO_TRABAJADOR'];
+                    $_SESSION['codigo_departamento'] = $datos['CODIGO_DEPARTAMENTO'];
+                    $_SESSION['codigo_cargo'] = $datos['CODIGO_CARGO_TRABAJADOR'];
                     $_SESSION['usuario'] = $correo;
                     header("Location: /SuperRosita/success");
                     exit();
