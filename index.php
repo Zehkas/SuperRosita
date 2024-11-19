@@ -3,6 +3,7 @@ require_once './controller/UsuarioControlador.php';
 require_once './controller/ProductoControlador.php';
 require_once './controller/RedirectControlador.php';
 require_once './controller/CarritoControlador.php';
+require_once './controller/TrabajadorControlador.php';
 require_once './connection.php';
 
 // Crear conexión a la base de datos
@@ -13,6 +14,7 @@ $usuarioControlador = new UsuarioControlador($dbConnection);
 $productoControlador = new ProductoControlador($dbConnection);
 $redirectControlador = new RedirectControlador();
 $carritoControlador = new CarritoControlador($dbConnection);
+$trabajadorControlador = new TrabajadorControlador($dbConnection);
 
 // Acciones relacionadas con el usuario
 if (isset($_GET['action'])) {
@@ -22,6 +24,9 @@ if (isset($_GET['action'])) {
             break;
         case 'login':
             $usuarioControlador->Login();
+            break;
+        case 'registro_trabajador':
+            $trabajadorControlador->IngresarTrabajador();
             break;
         case 'registroProducto':
             $productoControlador->RegistroProducto();
