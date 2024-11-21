@@ -65,7 +65,7 @@ if (isset($_GET['action'])) {
             $idCliente = $_SESSION['codigo_cliente'];
 
             if ($idCliente) {
-                $carritoControlador->actualizarEstadoProducto($codigoProducto, $idCliente, 3);
+                $carritoControlador->eliminarProducto($codigoProducto, $idCliente);
                 echo json_encode(['success' => true]);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Cliente no autenticado']);
