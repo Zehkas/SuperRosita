@@ -50,6 +50,10 @@ class RedirectControlador {
                 require_once __DIR__ . '/../view/perfil/ingresar-trabajador.php';
                 break;
 
+            case 'perfil/gestion-devoluciones':
+                require_once __DIR__ . '/../view/perfil/gestion-devoluciones.php';
+                break;
+
             default:
                 require_once __DIR__ . '/../view/404.php';
                 break; 

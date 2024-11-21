@@ -14,13 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codigoCarrito'], $_POS
   $codigoCarrito = $_POST['codigoCarrito'];
   $descripcion = $_POST['descripcion'];
 
-  // Comprobamos que el código del cliente está definido
   if (isset($idCliente)) {
     $carritoControlador->iniciarReembolso($codigoCarrito, $descripcion);
     header("Location: /SuperRosita/perfil/historial");
     exit();
   } else {
-    // Manejo del error si el cliente no está definido
     echo "Error: Cliente no autenticado.";
   }
 }
@@ -88,6 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codigoCarrito'], $_POS
                       <span class="reembolsopendiente">Reembolso En Revision...</span>
                     <?php elseif ($compra['ESTADO'] == 6) : ?>
                       <span class="reembolsorechazado">Reembolso Rechazado</span>
+                    <?php elseif ($compra['ESTADO'] == 7) : ?>
+                      <span class="reembolsopendiente">Reembolso Cancelado Por Cliente</span>
                     <?php else : ?>
                         <button class="producto-boton" onclick="abrirModal(<?php echo $compra['CODIGO_CARRITO']; ?>)">Iniciar Reembolso</button>
                     <?php endif; ?>
@@ -98,7 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codigoCarrito'], $_POS
     </main>
   </div>
 
-  <!-- Ventana Modal -->
   <div id="modalReembolso" class="modal">
     <div class="modal-content">
       <span class="close" onclick="cerrarModal()">&times;</span>

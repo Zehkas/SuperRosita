@@ -7,8 +7,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SuperRosita/controller/CarritoControl
 
 $dbConnection = (new Connection())->connect();
 $carritoControlador = new CarritoControlador($dbConnection);
-$idCliente = $_SESSION['codigo_cliente'];
-$devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
+$devoluciones = $carritoControlador->obtenerTodasDevoluciones(); 
 
 ?>
 <!DOCTYPE html>
@@ -16,7 +15,7 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Devoluciones</title>
+  <title>Gestionar Devoluciones</title>
   <link rel="stylesheet" href="/SuperRosita/css/global.css">
   <link rel="stylesheet" href="/SuperRosita/css/perfil.css">
   <link rel="stylesheet" href="/SuperRosita/css/historial.css">
@@ -43,19 +42,8 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
         </ul>
     </aside>
 
-
     <main class="contenido">
-        <h2>
-        <?php 
-          if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
-              if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-                  echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
-              } else {
-                  echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
-              }
-          }
-          ?>
-        </h2>
+        <h2>Gestionar Devoluciones</h2>
         
         <div id="devoluciones">
           <?php foreach ($devoluciones as $devolucion) : ?>
@@ -68,18 +56,21 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
                 <div class="producto-info">
                     <strong><?php echo $devolucion['NOMBRE']; ?></strong>
                     <span>Cantidad: <?php echo $devolucion['CANTIDAD']; ?></span>
+                    <span>Motivo: <?php echo $devolucion['DESCRIPCION']; ?></span>
                     <?php if ($devolucion['ESTADO'] == 4) : ?>
-                        <span class="reembolsado">Producto Reembolsado</span>
+                        <span class="reembolsado">Reembolso Aprobado</span>
                     <?php elseif ($devolucion['ESTADO'] == 5) : ?>
                       <div class="reembolsopendiente">
-                        <span>Reembolso En Revisión</span>
-                        <button onclick="abrirModalEditar(<?php echo $devolucion['CODIGO_CARRITO']; ?>)">Editar Motivo</button>
-                        <button onclick="cancelarReembolso(<?php echo $devolucion['CODIGO_CARRITO']; ?>)">Cancelar Solicitud</button>
+                        <span>Reembolso Pendiente</span>
+                        <div class="reembolso-botones">
+                          <button class="aprobar-reembolso" onclick="aprobarReembolso(<?php echo $devolucion['CODIGO_CARRITO']; ?>)">Aprobar</button>
+                          <button class="rechazar-reembolso" onclick="rechazarReembolso(<?php echo $devolucion['CODIGO_CARRITO']; ?>)">Rechazar</button>
+                        </div>
                       </div>
                     <?php elseif ($devolucion['ESTADO'] == 6) : ?>
                       <span class="reembolsorechazado">Reembolso Rechazado</span>
                     <?php elseif ($devolucion['ESTADO'] == 7) : ?>
-                      <span class="reembolsopendiente">Reembolso Cancelado Por Cliente</span>
+                      <span class="reembolsopendiente">Reembolso Cancelado Por El Cliente</span>
                     <?php endif; ?>
                 </div>
             </div>
@@ -88,35 +79,10 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
     </main>
   </div>
 
-<div id="modalEditarReembolso" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="cerrarModalEditar()">&times;</span>
-    <h2>Editar Motivo del Reembolso</h2>
-    <form id="formEditarReembolso" method="post" action="/SuperRosita/index.php?action=editarReembolso">
-      <input type="hidden" name="codigoCarrito" id="codigoCarritoModalEditar">
-      <textarea name="descripcion" id="descripcionEditar" maxlength="100" placeholder="Editar motivo del reembolso (máximo 100 caracteres)"></textarea>
-      <div class="footer">
-        <button type="submit">Guardar Cambios</button>
-        <button type="button" id="cancelarBtnEditar" onclick="cerrarModalEditar()">Cancelar</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-
   <script>
-    function abrirModalEditar(codigoCarrito) {
-        document.getElementById('codigoCarritoModalEditar').value = codigoCarrito;
-        document.getElementById('modalEditarReembolso').style.display = 'block';
-    }
-
-    function cerrarModalEditar() {
-        document.getElementById('modalEditarReembolso').style.display = 'none';
-    }
-
-    function cancelarReembolso(codigoCarrito) {
-        if (confirm("¿Estás seguro de que deseas cancelar la solicitud de reembolso?")) {
-            fetch('/SuperRosita/index.php?action=cancelarReembolso', {
+    function aprobarReembolso(codigoCarrito) {
+        if (confirm("¿Estás seguro de que deseas aprobar esta solicitud de reembolso?")) {
+            fetch('/SuperRosita/index.php?action=aprobarReembolso', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -129,7 +95,30 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
                 if (data.success) {
                     location.reload();
                 } else {
-                    alert('Error al cancelar la solicitud de reembolso');
+                    alert('Error al aprobar el reembolso');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    }
+
+    function rechazarReembolso(codigoCarrito) {
+        if (confirm("¿Estás seguro de que deseas rechazar esta solicitud de reembolso?")) {
+            fetch('/SuperRosita/index.php?action=rechazarReembolso', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    codigoCarrito: codigoCarrito
+                })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Error al rechazar el reembolso');
                 }
             }).catch(error => {
                 console.error('Error:', error);

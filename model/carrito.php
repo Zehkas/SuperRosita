@@ -63,7 +63,7 @@ class Carrito
             $sql = "SELECT P.NOMBRE_PRODUCTO as nombre, C.CANTIDAD_CARRITO as cantidad, C.PRECIO_CARRITO as precio, C.CODIGO_PRODUCTO as codigo, C.ESTADO_CARRITO as estado, C.CODIGO_CARRITO as codigo_carrito 
                     FROM MMVK_CARRITO C 
                     JOIN MMVK_PRODUCTO P ON C.CODIGO_PRODUCTO = P.CODIGO_PRODUCTO 
-                    WHERE (C.CODIGO_CLIENTE = :codigo_cliente AND (C.ESTADO_CARRITO = 1 OR C.ESTADO_CARRITO BETWEEN 4 AND 6))";
+                    WHERE (C.CODIGO_CLIENTE = :codigo_cliente AND (C.ESTADO_CARRITO = 1 OR C.ESTADO_CARRITO BETWEEN 4 AND 7))";
             $stmt = oci_parse($this->db, $sql);
 
             oci_bind_by_name($stmt, ':codigo_cliente', $codigoCliente);
@@ -76,6 +76,31 @@ class Carrito
 
             oci_free_statement($stmt);
             return $historial;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
+        }
+    }
+
+    public function obtenerDevoluciones($codigoCliente)
+    {
+        try {
+            $sql = "SELECT P.NOMBRE_PRODUCTO as nombre, C.CANTIDAD_CARRITO as cantidad, C.PRECIO_CARRITO as precio, C.CODIGO_PRODUCTO as codigo, C.ESTADO_CARRITO as estado, C.CODIGO_CARRITO as codigo_carrito 
+                    FROM MMVK_CARRITO C 
+                    JOIN MMVK_PRODUCTO P ON C.CODIGO_PRODUCTO = P.CODIGO_PRODUCTO 
+                    WHERE C.CODIGO_CLIENTE = :codigo_cliente AND C.ESTADO_CARRITO BETWEEN 4 AND 7";
+            $stmt = oci_parse($this->db, $sql);
+
+            oci_bind_by_name($stmt, ':codigo_cliente', $codigoCliente);
+            oci_execute($stmt);
+
+            $devoluciones = [];
+            while ($row = oci_fetch_assoc($stmt)) {
+                $devoluciones[] = $row;
+            }
+
+            oci_free_statement($stmt);
+            return $devoluciones;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return [];
@@ -148,8 +173,8 @@ class Carrito
             $codigoCliente = $carritoInfo['CODIGO_CLIENTE'];
             
             // Insertar en la tabla de devoluciones
-            $sql = "INSERT INTO MMVK_DEVOLUCION (CODIGO_DEVOLUCION, FECHA_DEVOLUCION, DESCRIPCION_DEVOLUCION, CODIGO_PRODUCTO, CODIGO_CLIENTE)
-                    VALUES (SEQ_DEVOLUCION.NEXTVAL, SYSDATE, :descripcion, :codigo_producto, :codigo_cliente)";
+            $sql = "INSERT INTO MMVK_DEVOLUCION (FECHA_DEVOLUCION, DESCRIPCION_DEVOLUCION, CODIGO_PRODUCTO, CODIGO_CLIENTE)
+                    VALUES (SYSDATE, :descripcion, :codigo_producto, :codigo_cliente)";
             $stmt = oci_parse($this->db, $sql);
             oci_bind_by_name($stmt, ':descripcion', $descripcion);
             oci_bind_by_name($stmt, ':codigo_producto', $codigoProducto);
@@ -162,7 +187,7 @@ class Carrito
             }
 
             // Actualizar estado del producto en el carrito
-            $this->actualizarEstadoProducto($codigoCarrito, 5); // Estado 5: Reembolso en curso
+            $this->actualizarEstadoProducto($codigoCarrito, 5);
 
             oci_free_statement($stmt);
             return $result;
@@ -171,5 +196,96 @@ class Carrito
             return false;
         }
     }
+
+    public function editarReembolso($codigoCarrito, $descripcion)
+    {
+        try {
+            $sqlCarrito = "SELECT CODIGO_PRODUCTO, CODIGO_CLIENTE FROM MMVK_CARRITO WHERE CODIGO_CARRITO = :codigo_carrito";
+            $stmtCarrito = oci_parse($this->db, $sqlCarrito);
+            oci_bind_by_name($stmtCarrito, ':codigo_carrito', $codigoCarrito);
+            oci_execute($stmtCarrito);
+            $carritoInfo = oci_fetch_assoc($stmtCarrito);
+            
+            if (!$carritoInfo) {
+                throw new Exception("Error: No se encontró el carrito con el código proporcionado.");
+            }
+    
+            $codigoProducto = $carritoInfo['CODIGO_PRODUCTO'];
+            $codigoCliente = $carritoInfo['CODIGO_CLIENTE'];
+    
+            $sql = "UPDATE MMVK_DEVOLUCION SET DESCRIPCION_DEVOLUCION = :descripcion 
+                    WHERE CODIGO_PRODUCTO = :codigo_producto AND CODIGO_CLIENTE = :codigo_cliente";
+            $stmt = oci_parse($this->db, $sql);
+            oci_bind_by_name($stmt, ':descripcion', $descripcion);
+            oci_bind_by_name($stmt, ':codigo_producto', $codigoProducto);
+            oci_bind_by_name($stmt, ':codigo_cliente', $codigoCliente);
+    
+            $result = oci_execute($stmt);
+            if (!$result) {
+                $error = oci_error($stmt);
+                throw new Exception("Error en editarReembolso: " . $error['message']);
+            }
+    
+            oci_free_statement($stmt);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function cancelarReembolso($codigoCarrito)
+    {
+        try {
+            // Actualizar el estado del carrito a 7 (Reembolso Cancelado)
+            $sql = "UPDATE MMVK_CARRITO SET ESTADO_CARRITO = 7 WHERE CODIGO_CARRITO = :codigo_carrito";
+            $stmt = oci_parse($this->db, $sql);
+            oci_bind_by_name($stmt, ':codigo_carrito', $codigoCarrito);
+
+            $result = oci_execute($stmt);
+            if (!$result) {
+                $error = oci_error($stmt);
+                throw new Exception("Error en cancelarReembolso: " . $error['message']);
+            }
+
+            oci_free_statement($stmt);
+            return $result;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+    
+public function obtenerTodasDevoluciones() { 
+    try {
+        $sql = "SELECT P.NOMBRE_PRODUCTO as nombre, C.CANTIDAD_CARRITO as cantidad, C.PRECIO_CARRITO as precio, C.CODIGO_PRODUCTO as codigo, C.ESTADO_CARRITO as estado, C.CODIGO_CARRITO as codigo_carrito, D.DESCRIPCION_DEVOLUCION as descripcion 
+                FROM MMVK_CARRITO C 
+                JOIN MMVK_PRODUCTO P ON C.CODIGO_PRODUCTO = P.CODIGO_PRODUCTO 
+                JOIN MMVK_DEVOLUCION D ON C.CODIGO_PRODUCTO = D.CODIGO_PRODUCTO AND C.CODIGO_CLIENTE = D.CODIGO_CLIENTE
+                WHERE C.ESTADO_CARRITO BETWEEN 4 AND 7";
+        $stmt = oci_parse($this->db, $sql);
+        oci_execute($stmt);
+
+        $devoluciones = [];
+        while ($row = oci_fetch_assoc($stmt)) {
+            $devoluciones[] = $row;
+        }
+
+        oci_free_statement($stmt);
+        return $devoluciones;
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        return [];
+    }
+}
+
+public function aprobarReembolso($codigoCarrito) { 
+    return $this->actualizarEstadoProducto($codigoCarrito, 4);
+}
+
+public function rechazarReembolso($codigoCarrito) { 
+    return $this->actualizarEstadoProducto($codigoCarrito, 6);
+}
+
 }
 ?>

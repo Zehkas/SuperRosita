@@ -35,7 +35,6 @@ if (session_status() === PHP_SESSION_NONE) {
         </ul>
     </aside>
 
-
     <main class="contenido">
         <h2>
         <?php 
@@ -47,10 +46,6 @@ if (session_status() === PHP_SESSION_NONE) {
               }
           }
           ?>
-
-
-
-
         </h2>
     </main>
     

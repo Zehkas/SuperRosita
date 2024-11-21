@@ -1,6 +1,5 @@
 <?php
-require_once './connection.php';
-
+require_once $_SERVER['DOCUMENT_ROOT'] . '/SuperRosita/connection.php';
 class Producto
 {
     private $db;
