@@ -20,51 +20,50 @@ if (session_status() === PHP_SESSION_NONE) {
   <div class="contenedor">
     <aside class="menuLateral">
       <ul>
-          <li><a href="/SuperRosita/perfil">General</a></li>
+        <li><a href="/SuperRosita/perfil">General</a></li>
 
-          <!-- Solo vista de cliente -->
-          <?php if (isset($_SESSION['codigo_cliente'])): ?>
+        <!-- Solo vista de cliente -->
+        <?php if (isset($_SESSION['codigo_cliente'])): ?>
           <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
           <li><a href="/SuperRosita/perfil/devolucion">Devolucion</a></li>
-          <?php endif; ?>
+        <?php endif; ?>
 
 
-          <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
+        <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
 
 
-          <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
+        <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
           <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
           <li><a href="/SuperRosita/perfil/promocion">Ingresar Promoción</a></li>
           <li><a href="/SuperRosita/perfil/gestion-devoluciones">Gestionar Devoluciones</a></li>
-          <?php endif; ?>
-      </ul>
-    </aside>
+        <?php endif; ?>
+    </ul>
+  </aside>
 
     <main class="contenido">
-        <h2>
+      <h2>
         <?php 
           if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
-              if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-                  echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
-              } else {
-                  echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
-              }
+            if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
+              echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+            } else {
+              echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+            }
           }
-          ?>
-        </h2>
+        ?>
+      </h2>
 
         <form action="/SuperRosita/index.php?action=changePassword" method="POST">
-            <div class="form-group">
-                <label for="oldPassword">Contraseña Actual</label>
-                <input type="password" id="oldPassword" name="oldPassword" placeholder="Contraseña actual" required>
+          <div class="form-group">
+              <label for="oldPassword">Contraseña Actual</label>
+              <input type="password" id="oldPassword" name="oldPassword" placeholder="Contraseña actual" required>
 
-                <label for="password">Nueva Contraseña</label>
-                <input type="password" id="password" name="password" placeholder="Nueva contraseña" required>
-            </div>
+              <label for="password">Nueva Contraseña</label>
+              <input type="password" id="password" name="password" placeholder="Nueva contraseña" required>
+          </div>
             
-            <button type="submit" class="btn">Cambiar Contraseña</button>
+          <button type="submit" class="btn">Cambiar Contraseña</button>
         </form>
-
     </main>
   </div>
 </body>
