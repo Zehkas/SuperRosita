@@ -36,7 +36,7 @@ class PromocionControlador {
                 $resultado = $promocion->agregarPromocion($codigo_departamento, $descuento);
 
                 if ($resultado['exito']) {
-                    $_SESSION['mensaje_exito'] = 'Promoción ingresada con éxito.';
+                    $_SESSION['mensaje_exito_agregar'] = 'Promoción ingresada con éxito.';
                     header('Location: /SuperRosita/perfil/promocion');
                 } else {
                     $_SESSION['error_ingreso_promocion'] = $resultado['mensaje_error'];
@@ -68,7 +68,7 @@ class PromocionControlador {
                 $resultado = $promocion->eliminarPromocion($codigo_departamento);
 
                 if ($resultado['exito']) {
-                    $_SESSION['mensaje_exito'] = 'Promoción quitada con exito.';
+                    $_SESSION['mensaje_exito_quitar'] = 'Promoción quitada con exito.';
                     header('Location: /SuperRosita/perfil/promocion');
                 } else {
                     $_SESSION['error_al_quitar_promocion'] = $resultado['mensaje_error'];

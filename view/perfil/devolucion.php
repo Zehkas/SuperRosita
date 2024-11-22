@@ -37,6 +37,7 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
 
             <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
             <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
+            <li><a href="/SuperRosita/perfil/promocion">Gestionar Promociones</a></li>
             <li><a href="/SuperRosita/perfil/gestion-devoluciones">Gestionar Devoluciones</a></li>
             <?php endif; ?>
 
@@ -49,9 +50,9 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
         <?php 
           if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
               if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-                  echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+                  echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
               } else {
-                  echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+                  echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
               }
           }
           ?>
@@ -66,16 +67,20 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
                 ?>
                 <img src="<?php echo $rutaImagen; ?>" alt="<?php echo $devolucion['NOMBRE']; ?>">
                 <div class="producto-info">
+
                     <strong><?php echo $devolucion['NOMBRE']; ?></strong>
                     <span>Cantidad: <?php echo $devolucion['CANTIDAD']; ?></span>
                     <?php if ($devolucion['ESTADO'] == 4) : ?>
                         <span class="reembolsado">Producto Reembolsado</span>
                     <?php elseif ($devolucion['ESTADO'] == 5) : ?>
+
                       <div class="reembolsopendiente">
                         <span>Reembolso En Revisión</span>
                         <button onclick="abrirModalEditar(<?php echo $devolucion['CODIGO_CARRITO']; ?>)">Editar Motivo</button>
                         <button onclick="cancelarReembolso(<?php echo $devolucion['CODIGO_CARRITO']; ?>)">Cancelar Solicitud</button>
                       </div>
+                      
+
                     <?php elseif ($devolucion['ESTADO'] == 6) : ?>
                       <span class="reembolsorechazado">Reembolso Rechazado</span>
                     <?php elseif ($devolucion['ESTADO'] == 7) : ?>

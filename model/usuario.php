@@ -159,5 +159,116 @@ class Usuario {
             return null;
         }
     }
+
+
+    
+    
+    public function validarContrasenaCliente($correo, $oldPassword) {
+        try {
+            if ($this->db === null) {
+                throw new Exception("Error de conexión a la base de datos.");
+            }
+
+            $sql = "SELECT CONTRASENA_CORREO_CLIENTE
+                    FROM MMVK_CLIENTES
+                    WHERE CORREO_CLIENTE = :correo";
+            $stmt = oci_parse($this->db, $sql);
+
+
+            oci_bind_by_name($stmt, ":correo", $correo);
+            oci_execute($stmt);
+            $row = oci_fetch_assoc($stmt);
+
+            if ($oldPassword === $row['CONTRASENA_CORREO_CLIENTE']) {
+                return true;
+            } 
+
+            return false;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
+
+    public function cambiarContrasenaCliente($correo, $contrasena){
+        try {
+            if ($this->db === null) {
+                throw new Exception("Error de conexión a la base de datos.");
+            }
+
+            $sql = "UPDATE MMVK_CLIENTES 
+                    SET CONTRASENA_CORREO_CLIENTE = :contrasena
+                    WHERE CORREO_CLIENTE = :correo"; 
+
+            $stmt = oci_parse($this->db, $sql);
+
+            oci_bind_by_name($stmt, ":correo", $correo);
+            oci_bind_by_name($stmt, ":contrasena", $contrasena);
+
+            if (oci_execute($stmt)){
+                return "Contraseña actualizada correctamente.";
+            } else {
+                $error = oci_error($stmt);
+                throw new Exception("Error al realizar la consulta: " . $error['message']);
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }        
+    }
+
+    public function validarContrasenaTrabajador($correo, $oldPassword) {
+        try {
+            if ($this->db === null) {
+                throw new Exception("Error de conexión a la base de datos.");
+            }
+
+            $sql = "SELECT CONTRASENA_CORREO_TRABAJADOR
+                    FROM MMVK_TRABAJADOR
+                    WHERE CORREO_TRABAJADOR = :correo";
+
+            $stmt = oci_parse($this->db, $sql);
+
+            oci_bind_by_name($stmt, ":correo", $correo);
+            oci_execute($stmt);
+            $row = oci_fetch_assoc($stmt);
+
+            if ($oldPassword === $row['CONTRASENA_CORREO_TRABAJADOR']) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
+
+    public function cambiarContrasenaTrabajador($correo, $contrasena){
+        try {
+            if ($this->db === null) {
+                throw new Exception("Error de conexión a la base de datos.");
+            }
+
+            $sql = "UPDATE MMVK_TRABAJADOR
+                    SET CONTRASENA_CORREO_TRABAJADOR = :contrasena
+                    WHERE CORREO_TRABAJADOR = :correo"; 
+
+            $stmt = oci_parse($this->db, $sql);
+
+            oci_bind_by_name($stmt, ":correo", $correo);
+            oci_bind_by_name($stmt, ":contrasena", $contrasena);
+
+            if (oci_execute($stmt)){
+                return "Contraseña actualizada correctamente.";
+            } else {
+                $error = oci_error($stmt);
+                throw new Exception("Error al realizar la consulta: " . $error['message']);
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }        
+    }
 }
 ?>
