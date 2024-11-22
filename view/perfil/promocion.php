@@ -57,6 +57,7 @@ $promociones = $promocionControlador->PromocionesDisponibles();
                 ?>
             </h2>
 
+
         <div class="contenedorPromociones">
             <div class="agregarPromocion">
             <h2>Ingresar Promoción</h2>
@@ -83,6 +84,18 @@ $promociones = $promocionControlador->PromocionesDisponibles();
                         <p id="porcentajeTexto" style="font-weight: bold;"></p> 
 
                         <input type="submit" value="Registrar Promoción">
+
+
+                        <?php if (isset($_SESSION['error_ingreso_promocion'])): ?>
+                            <p style="color: #FF0000"><?php echo $_SESSION['error_ingreso_promocion']; ?></p>
+                        <?php unset($_SESSION['error_ingreso_promocion']); ?>
+                        <?php endif; ?>
+
+                        <?php if (isset($_SESSION['mensaje_exito_agregar'])): ?>
+                            <p style="color: #00A000"><?php echo $_SESSION['mensaje_exito_agregar']; ?></p>
+                        <?php unset($_SESSION['mensaje_exito_agregar']); ?>
+                        <?php endif; ?>
+
                     </div>
                 </form>
             </div>
@@ -111,6 +124,18 @@ $promociones = $promocionControlador->PromocionesDisponibles();
                     </select>
                     <p id="porcentajeTexto" style="font-weight: bold;"></p> 
                     <input type="submit" value="Quitar Promoción" <?php echo empty($promociones) ? 'disabled' : ''; ?>>
+
+                    <?php if (isset($_SESSION['error_al_quitar_promocion'])): ?>
+                    <p style="color: #FF0000"><?php echo $_SESSION['error_al_quitar_promocion']; ?></p>
+                    <?php unset($_SESSION['error_al_quitar_promocion']); ?>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['mensaje_exito_quitar'])): ?>
+                        <p style="color: #00A000"><?php echo $_SESSION['mensaje_exito_quitar']; ?></p>
+                        <?php unset($_SESSION['mensaje_exito_quitar']); ?>
+                    <?php endif; ?>
+
+
                 </div>
             </form>
         </div>

@@ -67,16 +67,20 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
                 ?>
                 <img src="<?php echo $rutaImagen; ?>" alt="<?php echo $devolucion['NOMBRE']; ?>">
                 <div class="producto-info">
+
                     <strong><?php echo $devolucion['NOMBRE']; ?></strong>
                     <span>Cantidad: <?php echo $devolucion['CANTIDAD']; ?></span>
                     <?php if ($devolucion['ESTADO'] == 4) : ?>
                         <span class="reembolsado">Producto Reembolsado</span>
                     <?php elseif ($devolucion['ESTADO'] == 5) : ?>
+
                       <div class="reembolsopendiente">
                         <span>Reembolso En Revisión</span>
                         <button onclick="abrirModalEditar(<?php echo $devolucion['CODIGO_CARRITO']; ?>)">Editar Motivo</button>
                         <button onclick="cancelarReembolso(<?php echo $devolucion['CODIGO_CARRITO']; ?>)">Cancelar Solicitud</button>
                       </div>
+                      
+
                     <?php elseif ($devolucion['ESTADO'] == 6) : ?>
                       <span class="reembolsorechazado">Reembolso Rechazado</span>
                     <?php elseif ($devolucion['ESTADO'] == 7) : ?>

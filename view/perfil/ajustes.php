@@ -64,6 +64,16 @@ if (session_status() === PHP_SESSION_NONE) {
           </div>
             
           <button type="submit" class="btn">Cambiar Contraseña</button>
+
+          <?php if (isset($_SESSION['error_cambio'])): ?>
+            <p style="color: #FF0000"><?php echo $_SESSION['error_cambio']; ?></p>
+          <?php unset($_SESSION['error_cambio']); ?>
+          <?php endif; ?>
+
+          <?php if (isset($_SESSION['mensaje_exito'])): ?>
+            <p style="color: #00A000"><?php echo $_SESSION['mensaje_exito']; ?></p>
+          <?php unset($_SESSION['mensaje_exito']); ?>
+          <?php endif; ?>
         </form>
 
     </main>

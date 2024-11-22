@@ -31,7 +31,9 @@ if (isset($_GET['action'])) {
         case 'registro_trabajador':
             $trabajadorControlador->IngresarTrabajador();
             break;
-        
+        case 'changePassword':
+            $usuarioControlador->cambioContrasena();
+            break;
         // Apartado realacionado a los productos
         case 'registroProducto':
             $productoControlador->RegistroProducto();

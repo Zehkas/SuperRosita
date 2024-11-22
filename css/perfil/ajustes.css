@@ -44,3 +44,8 @@
 .contenedor .contenido .btn:hover {
     background-color: #d18bb3;
 }
+
+.contenedor .contenido p {
+    text-align: center;
+    margin-top: 10px;
+}

@@ -1,4 +1,5 @@
-.producto {
+  .producto {
+    background-color: #fff;
     border: 1px solid #ccc;
     padding: 16px;
     margin: 16px;
@@ -7,17 +8,26 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .producto img {
     max-width: 100px;
     max-height: 100px;
     margin-right: 16px;
+    object-fit: contain; 
   }
   
   .producto-info {
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+
+  .producto-info strong {
+    font-size: 16px;
+    color: #000000; 
+    margin-bottom: 16px; 
   }
   
   .producto-boton {
@@ -73,28 +83,42 @@
   /* Estilos añadidos para gestion-devoluciones */
   .reembolso-botones {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  
-  .aprobar-reembolso {
-    background-color: green;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 5px;
-    display: block;
-  }
-  
+    flex-direction: row;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+  .aprobar-reembolso,
   .rechazar-reembolso {
-    background-color: red;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      display: inline-block;
   }
+
+  .aprobar-reembolso {
+      background-color: #28a745;
+      color: white;
+  }
+
+  .aprobar-reembolso:hover {
+      background-color: #218838
+  }
+
+  .rechazar-reembolso {
+      background-color: #dc3545;
+      color: white;
+  }
+
+  .rechazar-reembolso:hover {
+      background-color: #c82333;
+  }
+
+
+
   
+

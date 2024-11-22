@@ -122,6 +122,7 @@ class UsuarioControlador {
         }
 
         if ($resultado) {
+        $_SESSION['mensaje_exito'] = "La contraseña ha sido cambiada!";
             header("Location: /SuperRosita/perfil/ajustes");
             exit();
         }
