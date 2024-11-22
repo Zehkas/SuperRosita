@@ -8,6 +8,9 @@ $dbConnection = (new Connection())->connect();
 // Crear instancia del controlador con la conexión a la base de datos
 $productoControlador = new ProductoControlador($dbConnection);
 $productos = $productoControlador->MostrarProductos();
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -32,20 +35,26 @@ $productos = $productoControlador->MostrarProductos();
     </div>
 
     <section class="productos-destacados">
+
         <?php foreach ($productos as $producto): ?>
             <div class="producto" onclick="mostrarModal('<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['CODIGO_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?>')">
                 <?php if (isset($producto['NOMBRE_PRODUCTO'], $producto['PRECIO_VENTA_PRODUCTO'], $producto['CODIGO_PRODUCTO'])): ?>
                     <?php 
                         $nombreImagen = strtolower(str_replace(' ', '_', $producto['NOMBRE_PRODUCTO'])) . '.png'; 
                     ?>
+
                     <img src="/SuperRosita/imgs/<?php echo htmlspecialchars($nombreImagen); ?>" alt="<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>">
                     <h2><?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?></h2>
                     <p>$<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?></p>
+
                 <?php else: ?>
                     <p>Datos del producto no disponibles</p>
                 <?php endif; ?>
+
             </div>
+
         <?php endforeach; ?>
+
     </section>
 
     <div class="ver-mas">

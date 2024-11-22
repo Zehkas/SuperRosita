@@ -27,6 +27,9 @@ if (isset($_GET['action'])) {
         case 'login':
             $usuarioControlador->Login();
             break;
+        case 'changePassword':
+            $usuarioControlador->cambioContrasena();
+            break;
         case 'registro_trabajador':
             $trabajadorControlador->IngresarTrabajador();
             break;

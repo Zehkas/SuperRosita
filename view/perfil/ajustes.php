@@ -52,8 +52,20 @@ if (session_status() === PHP_SESSION_NONE) {
           }
           ?>
         </h2>
+
+        <form action="/SuperRosita/index.php?action=changePassword" method="POST">
+            <div class="form-group">
+                <label for="oldPassword">Contraseña Actual</label>
+                <input type="password" id="oldPassword" name="oldPassword" placeholder="Contraseña actual" required>
+
+                <label for="password">Nueva Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Nueva contraseña" required>
+            </div>
+            
+            <button type="submit" class="btn">Cambiar Contraseña</button>
+        </form>
+
     </main>
-    
   </div>
 </body>
 </html>
