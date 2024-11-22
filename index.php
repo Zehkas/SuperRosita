@@ -21,17 +21,20 @@ $promocionControlador = new PromocionControlador($dbConnection);
 // Acciones relacionadas con el usuario
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
+        //Apartado relacionado a las cuentas
         case 'registro':
             $usuarioControlador->Registro();
             break;
         case 'login':
             $usuarioControlador->Login();
             break;
-        case 'changePassword':
-            $usuarioControlador->cambioContrasena();
-            break;
         case 'registro_trabajador':
             $trabajadorControlador->IngresarTrabajador();
+            break;
+        
+        // Apartado realacionado a los productos
+        case 'registroProducto':
+            $productoControlador->RegistroProducto();
             break;
         case 'promocion':
             $promocionControlador->IngresarPromocion();
@@ -39,26 +42,26 @@ if (isset($_GET['action'])) {
         case 'quitarpromocion':
             $promocionControlador->QuitarPromocion();
             break; 
-        case 'registroProducto':
-            $productoControlador->RegistroProducto();
-            break;
         case 'editarProducto':
             $productoControlador->EditarProducto();
             break;
         case 'eliminarProducto':
             $productoControlador->EliminarProducto();
             break;
+
+
+        //Apartado de Carrito    
         case 'agregarAlCarrito':
             $data = json_decode(file_get_contents('php://input'), true);
-            $codigoProducto = $data['codigoProducto'];
-            $cantidad = $data['cantidad'];
+            $codigoProducto = $data['codigoProducto'] ?? null;
+            $cantidad = $data['cantidad'] ?? null;
             $idCliente = $_SESSION['codigo_cliente'];
 
-            if ($idCliente) {
+            if ($idCliente && $codigoProducto !== null && $cantidad !== null) {
                 $productoControlador->AgregarAlCarrito($codigoProducto, $idCliente, $cantidad);
                 echo json_encode(['success' => true]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Cliente no autenticado']);
+                echo json_encode(['success' => false, 'message' => 'Datos faltantes o cliente no autenticado']);
             }
             exit();
         case 'verCarrito':
@@ -72,14 +75,14 @@ if (isset($_GET['action'])) {
             exit();
         case 'eliminarProductoCarrito':
             $data = json_decode(file_get_contents('php://input'), true);
-            $codigoProducto = $data['codigoProducto'];
+            $codigoProducto = $data['codigoProducto'] ?? null;
             $idCliente = $_SESSION['codigo_cliente'];
 
-            if ($idCliente) {
-                $carritoControlador->actualizarEstadoProducto($codigoProducto, $idCliente, 3);
+            if ($idCliente && $codigoProducto !== null) {
+                $carritoControlador->eliminarProducto($codigoProducto, $idCliente);
                 echo json_encode(['success' => true]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Cliente no autenticado']);
+                echo json_encode(['success' => false, 'message' => 'Datos faltantes o cliente no autenticado']);
             }
             exit();
         case 'completarCompra':
@@ -89,6 +92,55 @@ if (isset($_GET['action'])) {
                 echo json_encode(['success' => true]);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Cliente no autenticado']);
+            }
+            exit();
+
+
+
+        //Apartado de Devoluciones   
+        case 'editarReembolso':
+            $codigoCarrito = $_POST['codigoCarrito'] ?? null;
+            $descripcion = $_POST['descripcion'] ?? null;
+
+            if (isset($_SESSION['codigo_cliente']) && $codigoCarrito !== null && $descripcion !== null) {
+                $carritoControlador->editarReembolso($codigoCarrito, $descripcion);
+                header('Location: /SuperRosita/perfil/devolucion'); // Redirigir a la página de devoluciones
+                exit();
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Datos faltantes o cliente no autenticado']);
+            }
+            exit();
+        case 'cancelarReembolso':
+            $data = json_decode(file_get_contents('php://input'), true);
+            $codigoCarrito = $data['codigoCarrito'] ?? null;
+
+            if (isset($_SESSION['codigo_cliente']) && $codigoCarrito !== null) {
+                $carritoControlador->cancelarReembolso($codigoCarrito);
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Datos faltantes o cliente no autenticado']);
+            }
+            exit();
+        case 'aprobarReembolso':
+            $data = json_decode(file_get_contents('php://input'), true);
+            $codigoCarrito = $data['codigoCarrito'] ?? null;
+
+            if ($codigoCarrito !== null) {
+                $carritoControlador->aprobarReembolso($codigoCarrito);
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Datos faltantes']);
+            }
+            exit();
+        case 'rechazarReembolso':
+            $data = json_decode(file_get_contents('php://input'), true);
+            $codigoCarrito = $data['codigoCarrito'] ?? null;
+
+            if ($codigoCarrito !== null) {
+                $carritoControlador->rechazarReembolso($codigoCarrito);
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Datos faltantes']);
             }
             exit();
         default:
@@ -102,7 +154,6 @@ elseif (isset($_GET['ruta'])) {
     $ruta = $_GET['ruta'];
     $redirectControlador->redirigir($ruta);
 } else {
-    // Redirige a la página de inicio por defecto si no hay parámetros
     $redirectControlador->redirigir('inicio');
     exit();
 }

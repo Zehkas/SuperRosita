@@ -12,6 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <title>Ajustes de Perfil</title>
   <link rel="stylesheet" href="/SuperRosita/css/global.css">
   <link rel="stylesheet" href="/SuperRosita/css/perfil.css">
+  <link rel="stylesheet" href="/SuperRosita/css/perfil/ajustes.css">
 </head>
 <body>
 
@@ -34,7 +35,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
         <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
           <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
-          <li><a href="/SuperRosita/perfil/promocion">Ingresar Promoción</a></li>
+          <li><a href="/SuperRosita/perfil/promocion">Gestionar Promociones</a></li>
           <li><a href="/SuperRosita/perfil/gestion-devoluciones">Gestionar Devoluciones</a></li>
         <?php endif; ?>
     </ul>
