@@ -1,7 +1,12 @@
 <?php 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-}
+} 
+$dbConnection = (new Connection())->connect();
+
+// Crear instancia del controlador con la conexión a la base de datos
+$promocionControlador = new PromocionControlador($dbConnection);
+$promociones = $promocionControlador->PromocionesDisponibles();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,7 +32,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
 
     <?php include __DIR__ . '/../header.php'; ?>
-
+    
     <div class="contenedor">
         <aside class="menuLateral">
             <ul>
@@ -55,7 +60,6 @@ if (session_status() === PHP_SESSION_NONE) {
                 }
                 ?>
             </h2>
-
             <div class="centrar">
                 <div class="contenedorRegistro">
                     <h2>Ingresar Promoción</h2>
@@ -85,29 +89,35 @@ if (session_status() === PHP_SESSION_NONE) {
                         </div>
                     </form>
                 </div>
-            <div class="contenedorRegistro">
+                <div class="contenedorRegistro">
                     <h2>Quitar Promoción</h2>
                     <form action="/SuperRosita/index.php?action=quitarpromocion" method="post">
                         <div class="formInterior">
-                            <label for="codigo_departamento">Departamento:</label>
-                            <select id="codigo_departamento" name="codigo_departamento" required>
+                            <label for="nombre_departamento">Departamento:</label>
+                            <select id="nombre_departamento" name="codigo_departamento" required>
                                 <option value="">Seleccione un departamento</option>
-                                <option value="1">Frutas y Verduras</option>
-                                <option value="2">Carniceria y Pescaderia</option>
-                                <option value="3">Panaderia y Pasteleria</option>
-                                <option value="4">Lacteos</option>
-                                <option value="5">Congelados</option>
-                                <option value="6">Bebestibles</option>
-                                <option value="7">Despensa</option>
-                                <option value="8">Limpieza y Hogar</option>
-                                <option value="9">Cuidado Personal</option>
-                                <option value="10">Jugueteria</option>
+                                <?php
+                                // Verificar si existen promociones disponibles
+                                if (!empty($promociones)) {
+                                    foreach ($promociones as $promocion) {
+                                        if (isset($promocion['CODIGO_DEPARTAMENTO'], $promocion['NOMBRE_DEPARTAMENTO'])) {
+                                            echo '<option value="' . htmlspecialchars($promocion['CODIGO_DEPARTAMENTO']) . '">'
+                                                . htmlspecialchars($promocion['NOMBRE_DEPARTAMENTO']) . 
+                                                '</option>';
+                                        }
+                                    }
+                                } else {
+                                    // Mensaje si no hay promociones
+                                    echo '<option value="">No hay promociones activas</option>';
+                                }
+                                ?>
                             </select>
-                            
                             <p id="porcentajeTexto" style="font-weight: bold;"></p> 
                             <input type="submit" value="Quitar Promoción">
                         </div>
                     </form>
+                </div>
+
 
 
                     <script>

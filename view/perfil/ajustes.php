@@ -22,14 +22,13 @@ if (session_status() === PHP_SESSION_NONE) {
         <ul>
             <li><a href="/SuperRosita/perfil">General</a></li>
             <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
-            <li><a href="/SuperRosita/perfil/devolucion">Devolucion</a></li>
+            <li><a href="/SuperRosita/perfil/devolucion">Devolución</a></li>
             <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
-            
+                
             <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
             <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
             <li><a href="/SuperRosita/perfil/promocion">Ingresar Promoción</a></li>
             <?php endif; ?>
-
         </ul>
     </aside>
 

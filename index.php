@@ -35,7 +35,7 @@ if (isset($_GET['action'])) {
             break;
         case 'quitarpromocion':
             $promocionControlador->QuitarPromocion();
-            break;
+            break; 
         case 'registroProducto':
             $productoControlador->RegistroProducto();
             break;

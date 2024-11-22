@@ -75,7 +75,6 @@ class PromocionControlador {
                     header('Location: /SuperRosita/perfil/promocion');
                 }
             } catch (PDOException $e) {
-                // Si ocurre un error
                 $_SESSION['error_al_quitar_promocion'] = 'Error al quitar la promoción: ' . $e->getMessage();
                 header('Location: /SuperRosita/perfil/promocion');
             }
@@ -87,5 +86,10 @@ class PromocionControlador {
             exit;
         }
     }
+    public function PromocionesDisponibles() {
+        $promocion = new Promocion($this->db);
+        return $promocion->obtenerPromocionesDisponibles();
+    }    
+       
 }
 ?>

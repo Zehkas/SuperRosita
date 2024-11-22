@@ -3,6 +3,7 @@ require_once './connection.php';
 
 class Trabajador {
     private $db;
+
     public function __construct() {
         $this->db = new Connection();
         $this->db = $this->db->connect();

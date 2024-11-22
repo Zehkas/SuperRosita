@@ -64,5 +64,28 @@ class Promocion {
             return ['exito' => false, 'mensaje_error' => 'Error al quitar la promoción: ' . $error['message']];
         }
     }
+    public function obtenerPromocionesDisponibles() {
+        try {
+            // Consulta SQL revisada
+            $sql = "SELECT DISTINCT D.CODIGO_DEPARTAMENTO, D.NOMBRE_DEPARTAMENTO 
+                    FROM MMVK_DEPARTAMENTO D 
+                    INNER JOIN MMVK_PRODUCTO P ON P.CODIGO_DEPARTAMENTO = D.CODIGO_DEPARTAMENTO 
+                    WHERE P.PRECIO_VENTA_PRODUCTO < P.PRECIO_ORIGINAL_PRODUCTO";
+            $stmt = oci_parse($this->db, $sql);
+            oci_execute($stmt);
+
+            $promocion = [];
+            while ($row = oci_fetch_assoc($stmt)) {
+                $promocion[] = $row;
+            }
+    
+            oci_free_statement($stmt);
+            return $promocion; 
+        } catch (Exception $e) {
+            error_log("Error en obtener Promociones Disponibles: " . $e->getMessage());
+            return []; // Retornar un array vacío si hay un error
+        }
+    }
+    
 }
 ?>
