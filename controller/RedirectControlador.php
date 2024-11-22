@@ -41,6 +41,10 @@ class RedirectControlador {
             case 'perfil/devolucion':
                 require_once __DIR__ . '/../view/perfil/devolucion.php';
                 break;
+            
+            case 'perfil/gestion-devoluciones':
+                require_once __DIR__ . '/../view/perfil/gestion-devoluciones.php';
+                break;
 
             case 'perfil/ajustes':
                 require_once __DIR__ . '/../view/perfil/ajustes.php';
@@ -49,9 +53,13 @@ class RedirectControlador {
             case 'perfil/ingresar-trabajador':
                 require_once __DIR__ . '/../view/perfil/ingresar-trabajador.php';
                 break;
+
+
             case 'perfil/promocion':
                 require_once __DIR__ . '/../view/perfil/promocion.php';
                 break;
+
+
             default:
                 require_once __DIR__ . '/../view/404.php';
                 break; 

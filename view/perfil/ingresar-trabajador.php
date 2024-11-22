@@ -28,21 +28,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <?php include __DIR__ . '/../header.php'; ?>
 
     <div class="contenedor">
-<<<<<<< Updated upstream
-        <aside class="menuLateral">
-            <ul>
-                <li><a href="/SuperRosita/perfil">General</a></li>
-                <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
-                <li><a href="/SuperRosita/perfil/devolucion">Devolución</a></li>
-                <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
-                
-                <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
-                <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
-                <li><a href="/SuperRosita/perfil/promocion">Ingresar Promoción</a></li>
-                <?php endif; ?>
-            </ul>
-        </aside>
-=======
     <aside class="menuLateral">
     <ul>
             <li><a href="/SuperRosita/perfil">General</a></li>
@@ -59,7 +44,6 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php endif; ?>
         </ul>
     </aside>
->>>>>>> Stashed changes
 
         <main class="contenido">
             <h2>
