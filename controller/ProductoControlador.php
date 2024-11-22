@@ -1,5 +1,5 @@
 <?php
-require_once './model/producto.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/SuperRosita/model/producto.php';
 
 class ProductoControlador
 {
@@ -34,7 +34,6 @@ class ProductoControlador
         }
     }
 
-    // Método para editar un producto existente
     public function EditarProducto()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -59,7 +58,6 @@ class ProductoControlador
         }
     }
 
-    // Método para eliminar un producto existente
     public function EliminarProducto()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -76,12 +74,12 @@ class ProductoControlador
         }
     }
 
-    // Método para obtener todos los productos
     public function MostrarProductos()
     {
         $producto = new Producto($this->db);
         return $producto->obtenerTodosLosProductos();
     }
+
     public function AgregarAlCarrito($codigoProducto, $idCliente, $cantidad = 1)
     {
         $producto = new Producto($this->db);
@@ -103,19 +101,15 @@ class ProductoControlador
         return $producto->obtenerProductosAleatorios($cantidad);
     }
 
-    // Método para eliminar un producto del carrito (cambiar estado a 3)
     public function EliminarDelCarrito($codigoCarrito, $codigoProducto)
     {
         $carrito = new Carrito($this->db);
         $carrito->actualizarEstadoProducto($codigoCarrito, $codigoProducto, 3);
     }
 
-    // Método para completar la compra (cambiar estado a 1)
     public function CompletarCompra($codigoCarrito, $codigoProducto)
     {
         $carrito = new Carrito($this->db);
         $carrito->actualizarEstadoProducto($codigoCarrito, $codigoProducto, 1);
     }
-
 }
-?>
