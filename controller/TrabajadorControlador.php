@@ -2,6 +2,7 @@
 require_once './model/trabajador.php';
 
 class TrabajadorControlador {
+
     public function IngresarTrabajador() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Obtener los datos enviados desde el formulario

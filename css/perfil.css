@@ -36,7 +36,7 @@
     color: #fff;
 }
 
-.contenido {
+.contenedor .contenido {
     flex-grow: 1;
     padding: 20px;
     background-color: #fae4f0;
@@ -48,8 +48,12 @@
     padding: 30px;
 }
 
-.contenido h2 {
-    font-size: 20px;
-    color: #000;
-    margin: 0;
+.contenedor .contenido h2 {
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 24px;
+    color: #111111;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    line-height: 1.8;
 }

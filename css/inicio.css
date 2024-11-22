@@ -47,8 +47,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center;
+    justify-content: center; 
     margin-top: 20px;
+    width: 100%; 
 }
 
 .producto {
@@ -69,8 +70,9 @@
 }
 
 .producto img {
-    width: 100%;
-    border-radius: 10px;
+    width: 180px;
+    height: 180px;
+    object-fit: contain; 
 }
 
 .producto h2 {

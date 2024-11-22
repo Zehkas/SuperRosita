@@ -8,6 +8,9 @@ $dbConnection = (new Connection())->connect();
 // Crear instancia del controlador con la conexión a la base de datos
 $productoControlador = new ProductoControlador($dbConnection);
 $productos = $productoControlador->MostrarProductos();
+
+$productosPorDepartamento = $productoControlador->ProductosDepartamento();
+
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +20,7 @@ $productos = $productoControlador->MostrarProductos();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Más Productos - SuperRosita</title>
-    <link rel="stylesheet" href="/SuperRosita/css/inicio.css">
+    <link rel="stylesheet" href="/SuperRosita/css/productos.css">
     <link rel="stylesheet" href="/SuperRosita/css/global.css">
     <link rel="stylesheet" href="/SuperRosita/css/modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -31,19 +34,27 @@ $productos = $productoControlador->MostrarProductos();
         <h1>Todos Los Productos</h1>
     </div>
 
+
     <section class="productos-destacados">
-        <?php foreach ($productos as $producto): ?>
-            <div class="producto" onclick="mostrarModal('<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['CODIGO_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?>')">
-                <?php if (isset($producto['NOMBRE_PRODUCTO'], $producto['PRECIO_VENTA_PRODUCTO'], $producto['CODIGO_PRODUCTO'])): ?>
-                    <?php 
-                        $nombreImagen = strtolower(str_replace(' ', '_', $producto['NOMBRE_PRODUCTO'])) . '.png'; 
-                    ?>
-                    <img src="/SuperRosita/imgs/<?php echo htmlspecialchars($nombreImagen); ?>" alt="<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>">
-                    <h2><?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?></h2>
-                    <p>$<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?></p>
-                <?php else: ?>
-                    <p>Datos del producto no disponibles</p>
-                <?php endif; ?>
+    <?php foreach ($productosPorDepartamento as $departamento => $productos): ?>
+        <div class="departamento">
+            <h2><?php echo htmlspecialchars($departamento); ?></h2>
+            <div class="productos">
+                <?php foreach ($productos as $producto): ?>
+                    <div class="producto" onclick="mostrarModal('<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['CODIGO_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?>')">
+                        <?php if (isset($producto['NOMBRE_PRODUCTO'], $producto['PRECIO_VENTA_PRODUCTO'], $producto['CODIGO_PRODUCTO'])): ?>
+                            <?php 
+                                $nombreImagen = strtolower(str_replace(' ', '_', $producto['NOMBRE_PRODUCTO'])) . '.png'; 
+                            ?>
+                                <img src="/SuperRosita/imgs/<?php echo htmlspecialchars($nombreImagen); ?>" alt="<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>">
+                                <h3><?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?></h3>
+                                <p>$<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?></p>
+                            <?php else: ?>
+                                <p>Datos del producto no disponibles</p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
         <?php endforeach; ?>
     </section>

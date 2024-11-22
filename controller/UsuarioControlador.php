@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once './model/usuario.php';
 
 class UsuarioControlador {
@@ -86,6 +87,50 @@ class UsuarioControlador {
             header("Location: /SuperRosita/login");
             exit();
         }
+    }
+
+    public function cambioContrasena(){
+        $contrasena = $_POST['password'];
+        $oldPassword = $_POST['oldPassword'];
+        $correo = $_SESSION['usuario'];
+        $usuario = new Usuario();
+
+
+        $esTrabajador = str_ends_with($correo, '@superrosita.cl');
+        $esValida = false;
+
+        if ($esTrabajador) {
+            $esValida = $usuario->validarContrasenaTrabajador($correo, $oldPassword);
+
+        } else {
+            $esValida = $usuario->validarContrasenaCliente($correo, $oldPassword);
+        }
+
+        if (!$esValida) {
+            $_SESSION['error_cambio'] = "La contraseña actual no es correcta.";
+            header("Location: /SuperRosita/perfil/ajustes");
+            exit();
+        }
+
+        $resultado = false;
+
+        if ($esTrabajador){
+            $resultado = $usuario->cambiarContrasenaTrabajador($correo, $contrasena);
+
+        } else {
+            $resultado = $usuario->cambiarContrasenaCliente($correo, $contrasena);
+        }
+
+        if ($resultado) {
+        $_SESSION['mensaje_exito'] = "La contraseña ha sido cambiada!";
+            header("Location: /SuperRosita/perfil/ajustes");
+            exit();
+        }
+
+
+        $_SESSION['error_cambio'] = "Error al cambiar de Contraseña incorrectos";
+        header("Location: /SuperRosita/perfil/ajustes");
+        exit();
     }
 }
 ?>

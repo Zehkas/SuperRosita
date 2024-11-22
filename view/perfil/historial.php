@@ -40,20 +40,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codigoCarrito'], $_POS
 
   <div class="contenedor">
   <aside class="menuLateral">
-        <ul>
-            <li><a href="/SuperRosita/perfil">General</a></li>
-            <?php if (isset($_SESSION['codigo_cliente'])): ?>
-            <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
-            <li><a href="/SuperRosita/perfil/devolucion">Devolucion</a></li>
-            <?php endif; ?>
-            <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
+  <ul>
+          <li><a href="/SuperRosita/perfil">General</a></li>
 
-            <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
-            <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
-            <li><a href="/SuperRosita/perfil/gestion-devoluciones">Gestionar Devoluciones</a></li>
-            <?php endif; ?>
+          <!-- Solo vista de cliente -->
+          <?php if (isset($_SESSION['codigo_cliente'])): ?>
+          <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
+          <li><a href="/SuperRosita/perfil/devolucion">Devolucion</a></li>
+          <?php endif; ?>
 
-        </ul>
+
+          <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
+
+
+          <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
+          <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
+          <li><a href="/SuperRosita/perfil/promocion">Gestionar Promociones</a></li>
+          <li><a href="/SuperRosita/perfil/gestion-devoluciones">Gestionar Devoluciones</a></li>
+          <?php endif; ?>
+      </ul>
     </aside>
 
     <main class="contenido">
@@ -61,9 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codigoCarrito'], $_POS
         <?php 
           if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
               if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-                  echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+                  echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
               } else {
-                  echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+                  echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
               }
           }
         ?>
