@@ -19,63 +19,8 @@ $productos = $productoControlador->MostrarProductos();
     <title>Más Productos - SuperRosita</title>
     <link rel="stylesheet" href="/SuperRosita/css/inicio.css">
     <link rel="stylesheet" href="/SuperRosita/css/global.css">
+    <link rel="stylesheet" href="/SuperRosita/css/modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-        .modal-content {
-            background-color: #fae4f0;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            font-family: 'Times New Roman', Times, serif;
-        }
-        .contador-boton {
-            margin: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #D16D8C;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .contador-boton:hover {
-            background-color: #B45F75;
-        }
-        #addToCart {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        #addToCart:hover {
-            background-color: #555;
-        }
-        #success-message {
-            color: green;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -117,7 +62,10 @@ $productos = $productoControlador->MostrarProductos();
                 <span id="cantidad">1</span>
                 <button id="incremento" class="contador-boton">+</button>
             </div>
-            <button id="addToCart"><i class="fas fa-shopping-bag"></i> Añadir al Carrito</button>
+            <div id="modal-footer" class="footer">
+                <button id="addToCart"><i class="fas fa-shopping-bag"></i> Añadir al Carrito</button>
+                <button id="cancelarBtn">Cancelar</button>
+            </div>
             <p id="success-message">Producto agregado exitosamente</p>
         </div>
     </div>
@@ -160,6 +108,10 @@ $productos = $productoControlador->MostrarProductos();
             agregarAlCarrito(productoSeleccionado, cantidad);
         });
 
+        document.getElementById('cancelarBtn').addEventListener('click', () => {
+            document.getElementById('modal').style.display = 'none';
+        });
+
         function agregarAlCarrito(codigoProducto, cantidad) {
             fetch('/SuperRosita/index.php?action=agregarAlCarrito', {
                 method: 'POST',
@@ -174,9 +126,10 @@ $productos = $productoControlador->MostrarProductos();
             .then(data => {
                 if (data.success) {
                     document.getElementById('success-message').style.display = 'block';
+                    document.getElementById('modal-footer').style.display = 'none';  //Borra los botones
                     setTimeout(() => {
                         document.getElementById('modal').style.display = 'none';
-                    }, 2000); // Cierra la ventana emergente después de 2 segundos
+                    }, 1000);
                 } else {
                     alert('Error al agregar el producto al carrito');
                 }
