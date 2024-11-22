@@ -40,26 +40,26 @@ if (session_status() === PHP_SESSION_NONE) {
       </ul>
     </aside>
 
-
     <main class="contenido">
         <h2>
         <?php 
           if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
               if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-                  echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']) . "<br>";
+                  echo htmlspecialchars("Trabajador " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']) . "<br>";
                   echo htmlspecialchars("Fecha de Contrato: " . $_SESSION['fecha_contrato']) . "<br>";
+                  echo htmlspecialchars("Tipo de cuenta: " . "Trabajador"). "<br>";
               } else {
-                  echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+                  echo htmlspecialchars("Cliente " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2'])  . "<br>";
+                  echo htmlspecialchars("Tipo de cuenta: " . "Cliente"). "<br>";
               }
           }
           if (isset($_SESSION['usuario'])){
-            echo htmlspecialchars("Correo Electronico: " . $_SESSION['usuario']);
+            echo htmlspecialchars("Correo Electronico " . $_SESSION['usuario'])  . "<br>";
           }
           ?>
         </h2>
     </main>
 
-    
   </div>
 </body>
 </html>

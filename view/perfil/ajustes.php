@@ -45,16 +45,16 @@ if (session_status() === PHP_SESSION_NONE) {
         <?php 
           if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
             if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-              echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+              echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
             } else {
-              echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+              echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
             }
           }
         ?>
       </h2>
 
         <form action="/SuperRosita/index.php?action=changePassword" method="POST">
-          <div class="form-group">
+          <div class="contrasena">
               <label for="oldPassword">Contraseña Actual</label>
               <input type="password" id="oldPassword" name="oldPassword" placeholder="Contraseña actual" required>
 
@@ -64,7 +64,10 @@ if (session_status() === PHP_SESSION_NONE) {
             
           <button type="submit" class="btn">Cambiar Contraseña</button>
         </form>
+
     </main>
+    
   </div>
+
 </body>
 </html>

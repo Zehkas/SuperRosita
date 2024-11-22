@@ -66,9 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codigoCarrito'], $_POS
         <?php 
           if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
               if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-                  echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+                  echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
               } else {
-                  echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+                  echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
               }
           }
         ?>
