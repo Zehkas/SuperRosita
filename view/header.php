@@ -85,15 +85,31 @@ if (session_status() === PHP_SESSION_NONE) {
         width: 50px;
         height: 50px;
     }
-    .carrito-boton {
-        background-color: #333;
+    .carrito-producto-info {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-left: 10px;
+    }
+    .carrito-producto-info span {
+        display: block;
+    }
+    .carrito-producto-total {
+        text-align: right;
+    }
+    .carrito-boton-eliminar {
+        background-color: #dc3545;
         color: #fff;
-        padding: 10px;
         border: none;
+        padding: 5px 10px;
         cursor: pointer;
-        width: 100%;
-        margin-top: 10px;
+        border-radius: 5px;
+    }
+    .carrito-vacio {
         text-align: center;
+        padding: 20px;
+        font-size: 18px;
+        color: #777;
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -111,9 +127,11 @@ if (session_status() === PHP_SESSION_NONE) {
                 <i class="fas fa-user"></i> Ver Mi Perfil
             </div>
         <?php endif; ?> 
+        <?php if (isset($_SESSION['codigo_cliente'])): ?>
             <div class="botonCarrito" id="ver-carrito">
                 <i class="fas fa-shopping-cart"></i> Ver Mi Carrito
             </div>
+        <?php endif; ?> 
             <div class="botonCerrarSesion" onclick="location.href='/SuperRosita/logout'">
                 <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
             </div>
@@ -133,8 +151,8 @@ if (session_status() === PHP_SESSION_NONE) {
 <div class="carrito-desplegable" id="carrito-desplegable">
     <div class="carrito-contenido">
         <h2>Mi Carrito</h2>
-        <div id="carrito-productos"></div>
-        <button id="completar-compra" class="carrito-boton">Completar Compra</button>
+        <div id="carrito-productos" class="carrito-productos"></div>
+        <button id="completar-compra" class="carrito-boton" style="display: none;">Completar Compra</button>
     </div>
 </div>
 
@@ -151,23 +169,33 @@ if (session_status() === PHP_SESSION_NONE) {
             .then(data => {
                 const carritoProductos = document.getElementById('carrito-productos');
                 carritoProductos.innerHTML = '';
-                data.forEach(producto => {
-                    const productoElem = document.createElement('div');
-                    productoElem.className = 'carrito-producto';
-                    productoElem.innerHTML = `
-                        <img src="/SuperRosita/imgs/${producto.nombre.toLowerCase().replace(/\s/g, '_')}.png" alt="${producto.nombre}">
-                        <span>${producto.nombre}</span>
-                        <span>${producto.cantidad}</span>
-                        <span>${producto.precio}</span>
-                        <button onclick="eliminarProducto(${producto.codigo})">Eliminar</button>
-                    `;
-                    carritoProductos.appendChild(productoElem);
-                });
+                const completarCompraBoton = document.getElementById('completar-compra');
+
+                if (data.length === 0) {
+                    carritoProductos.innerHTML = '<p class="carrito-vacio">Carrito Vacío</p>';
+                    completarCompraBoton.style.display = 'none';
+                } else {
+                    completarCompraBoton.style.display = 'block';
+                    data.forEach(producto => {
+                        const productoElem = document.createElement('div');
+                        productoElem.className = 'carrito-producto';
+                        productoElem.innerHTML = `
+                            <img src="/SuperRosita/imgs/${producto.NOMBRE.toLowerCase().replace(/\s/g, '_')}.png" alt="${producto.NOMBRE}">
+                            <div class="carrito-producto-info">
+                                <span>${producto.NOMBRE}</span>
+                                <span>${producto.CANTIDAD} x $${producto.PRECIO/producto.CANTIDAD}</span>
+                                <span class="carrito-producto-total">Total: $${producto.PRECIO}</span>
+                            </div>
+                            <button class="carrito-boton-eliminar" onclick="eliminarProducto(${producto.CODIGO})">Quitar</button>
+                        `;
+                        carritoProductos.appendChild(productoElem);
+                    });
+                }
             });
     }
 
     function eliminarProducto(codigoProducto) {
-        fetch('/SuperRosita/index.php?action=eliminarProducto', {
+        fetch('/SuperRosita/index.php?action=eliminarProductoCarrito', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
