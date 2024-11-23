@@ -42,9 +42,9 @@ class Carrito
                 oci_free_statement($stmtUpdate);
             } else {
                 //Si no existe, se crea un nuevo carrito
-                $sqlInsert ="BEGIN
-                            MMVK_CRUD_CARRITO(NULL, 2, :cantidad_carrito, :precio_total, :codigo_producto, :codigo_cliente, 'I');
-                            END;";
+                $sqlInsert =    "BEGIN
+                                    MMVK_CRUD_CARRITO(NULL, 2, :cantidad_carrito, :precio_total, :codigo_producto, :codigo_cliente, 'I');
+                                END;";
                 $stmtInsert = oci_parse($this->db, $sqlInsert);
                 oci_bind_by_name($stmtInsert, ':codigo_producto', $codigoProducto);
                 oci_bind_by_name($stmtInsert, ':codigo_cliente', $codigoCliente);
