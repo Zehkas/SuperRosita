@@ -128,7 +128,7 @@ class UsuarioControlador {
         }
 
 
-        $_SESSION['error_cambio'] = "Error al cambiar de Contraseña incorrectos";
+        $_SESSION['error_cambio'] = "Error al cambiar de Contraseña";
         header("Location: /SuperRosita/perfil/ajustes");
         exit();
     }

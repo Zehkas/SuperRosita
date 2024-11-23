@@ -13,8 +13,9 @@ class Producto
     // Método para agregar un nuevo producto
     public function agregarProducto($nombre, $peso, $fecha_fabricacion, $precio_compra, $precio_venta, $existencia, $codigo_pais, $codigo_departamento)
     {
-        $sql = "INSERT INTO MMVK_PRODUCTO(NOMBRE_PRODUCTO, PESO_PRODUCTO, FECHA_FABRICACION_PRODUCTO, PRECIO_COMPRA_PRODUCTO, PRECIO_VENTA_PRODUCTO, EXISTENCIA_PRODUCTO, CODIGO_PAIS_ORIGEN_PRODUCTO, CODIGO_DEPARTAMENTO)
-                VALUES (:nombre, :peso, :fecha_fabricacion, :precio_compra, :precio_venta, :existencia, :codigo_pais, :codigo_departamento)";
+        $sql = "BEGIN 
+                MMVK_CRUD_PRODUCTO(NULL, :nombre, :peso, :fecha_fabricacion, NULL, :precio_compra, :precio_venta, :existencia, :codigo_pais, :codigo_departamento, 'I');
+                END;";
 
         $stmt = oci_parse($this->db, $sql);
 
@@ -44,16 +45,10 @@ class Producto
     // Método para editar un producto existente
     public function editarProducto($codigo_producto, $nombre, $peso, $fecha_fabricacion, $precio_compra, $precio_venta, $existencia, $codigo_pais, $codigo_departamento)
     {
-        $sql = "UPDATE MMVK_PRODUCTO SET
-                NOMBRE_PRODUCTO = :nombre,
-                PESO_PRODUCTO = :peso,
-                FECHA_FABRICACION_PRODUCTO = :fecha_fabricacion,
-                PRECIO_COMPRA_PRODUCTO = :precio_compra,
-                PRECIO_VENTA_PRODUCTO = :precio_venta,
-                EXISTENCIA_PRODUCTO = :existencia,
-                CODIGO_PAIS_ORIGEN_PRODUCTO = :codigo_pais,
-                CODIGO_DEPARTAMENTO = :codigo_departamento
-                WHERE CODIGO_PRODUCTO = :codigo_producto";
+        $sql = "BEGIN 
+                MMVK_CRUD_PRODUCTO(:codigo_producto, :nombre, :peso, :fecha_fabricacion, NULL, :precio_compra, :precio_venta, :existencia, :codigo_pais, :codigo_departamento, 'U');
+                END;";
+        $stmt = oci_parse($this->db, $sql);
 
         $stmt = oci_parse($this->db, $sql);
 
@@ -84,7 +79,11 @@ class Producto
     // Método para eliminar un producto existente
     public function eliminarProducto($codigo_producto)
     {
-        $sql = "DELETE FROM MMVK_PRODUCTO WHERE CODIGO_PRODUCTO = :codigo_producto";
+        $sql = "BEGIN 
+                MMVK_CRUD_CLIENTE(:codigo_producto, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'D');
+                END;";
+
+        $stmt = oci_parse($this->db, $sql);
 
         $stmt = oci_parse($this->db, $sql);
 

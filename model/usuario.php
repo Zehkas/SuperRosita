@@ -20,7 +20,9 @@ class Usuario {
             if ($region <= 0) {
                 throw new Exception("Selección de región inválida.");
             }
-            $sql = "BEGIN MMVK_INGRESA_CLIENTES(:region, :correo, :nombre, :apellido1, :apellido2, :contrasena); END;";
+            $sql = "BEGIN 
+                    MMVK_CRUD_CLIENTE('I', :region, :correo, :nombre, :apellido1, :apellido2, :contrasena);
+                    END;";
             $stmt = oci_parse($this->db, $sql);
     
             oci_bind_by_name($stmt, ':region', $region);
@@ -196,9 +198,9 @@ class Usuario {
                 throw new Exception("Error de conexión a la base de datos.");
             }
 
-            $sql = "UPDATE MMVK_CLIENTES 
-                    SET CONTRASENA_CORREO_CLIENTE = :contrasena
-                    WHERE CORREO_CLIENTE = :correo"; 
+            $sql = "BEGIN
+                    MMVK_CRUD_CLIENTE('U', NULL, :correo, NULL, NULL, NULL, :contrasena);
+                    END;"; 
 
             $stmt = oci_parse($this->db, $sql);
 
@@ -250,9 +252,9 @@ class Usuario {
                 throw new Exception("Error de conexión a la base de datos.");
             }
 
-            $sql = "UPDATE MMVK_TRABAJADOR
-                    SET CONTRASENA_CORREO_TRABAJADOR = :contrasena
-                    WHERE CORREO_TRABAJADOR = :correo"; 
+            $sql = "BEGIN
+                    MMVK_CRUD_TRABAJADOR('U', NULL, NULL, NULL, NULL, NULL, NULL, NULL, :correo, :contrasena);
+                    END;";
 
             $stmt = oci_parse($this->db, $sql);
 

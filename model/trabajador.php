@@ -23,7 +23,9 @@ class Trabajador {
                 throw new Exception("Selección de departamento o cargo inválida.");
             }
 
-            $sql = "BEGIN MMVK_INGRESA_TRABAJADOR(:nombre, :apellido1, :apellido2, :codigo_departamento, :codigo_cargo); END;";
+            $sql = "BEGIN 
+                    MMVK_CRUD_TRABAJADOR('I', NULL, :nombre, :apellido1, :apellido2, SYSDATE, :codigo_departamento, :codigo_cargo, NULL, NULL); 
+                    END;";
             $stmt = oci_parse($this->db, $sql);
 
             oci_bind_by_name($stmt, ':nombre', $nombre);
