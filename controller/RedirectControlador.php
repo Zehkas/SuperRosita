@@ -53,13 +53,12 @@ class RedirectControlador {
             case 'perfil/ingresar-trabajador':
                 require_once __DIR__ . '/../view/perfil/ingresar-trabajador.php';
                 break;
-
-
+            case 'perfil/reportes':
+                require_once __DIR__ . '/../view/perfil/reportes.php';
+                break;
             case 'perfil/promocion':
                 require_once __DIR__ . '/../view/perfil/promocion.php';
                 break;
-
-
             default:
                 require_once __DIR__ . '/../view/404.php';
                 break; 

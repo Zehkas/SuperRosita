@@ -38,6 +38,10 @@ $promociones = $promocionControlador->PromocionesDisponibles();
 
                 <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
 
+                <?php if (isset($_SESSION['codigo_cargo'])): ?>
+                    <li><a href="/SuperRosita/perfil/reportes">Solicitar Reportes</a></li>
+                <?php endif; ?>
+
             <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
                 <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
                 <li><a href="/SuperRosita/perfil/promocion">Gestionar Promociones</a></li>
