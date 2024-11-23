@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.contenedor {
+    display: flex;
+    min-height: 100vh;
+}
+
+.contenido {
+    flex: 1;
+    padding: 20px;
+}
+
+.submenu {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.submenu button {
+    background-color: #E4A8CA;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.submenu button:hover {
+    background-color: #d17bab;
+}
+
+.reporte-contenido {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.reporte-contenido h2 {
+    margin-top: 0;
+}
+
+.reporte-contenido p {
+    margin: 10px 0;
+}
+
+.tabla-reporte {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tabla-reporte th, .tabla-reporte td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.tabla-reporte th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.tabla-reporte tr:hover {
+    background-color: #f1f1f1;
+}
+
+.estado-aprobado {
+    color: red;
+}
+
+.estado-pendiente {
+    color: orange;
+}
+
+.estado-rechazado {
+    color: green;
+}
+
+.reporte-imagen {
+    max-width: 100px;
+    max-height: 100px;
+    margin-right: 20px;
+}
+
+.submenu button.active {
+    background-color: #d17bab;
+    border: 2px solid #c94a9d;
+}

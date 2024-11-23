@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <link rel="stylesheet" href="/SuperRosita/css/perfil.css">
   <link rel="stylesheet" href="/SuperRosita/css/perfil/ajustes.css">
 </head>
+
 <body>
 
   <?php include __DIR__ . '/../header.php'; ?>
@@ -23,62 +25,65 @@ if (session_status() === PHP_SESSION_NONE) {
       <ul>
         <li><a href="/SuperRosita/perfil">General</a></li>
 
-        <!-- Solo vista de cliente -->
         <?php if (isset($_SESSION['codigo_cliente'])): ?>
           <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
           <li><a href="/SuperRosita/perfil/devolucion">Devolucion</a></li>
         <?php endif; ?>
 
-
         <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
 
+        <?php if (isset($_SESSION['codigo_cargo'])): ?>
+          <li><a href="/SuperRosita/perfil/reportes">Solicitar Reportes</a></li>
+        <?php endif; ?>
 
         <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
           <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
           <li><a href="/SuperRosita/perfil/promocion">Gestionar Promociones</a></li>
           <li><a href="/SuperRosita/perfil/gestion-devoluciones">Gestionar Devoluciones</a></li>
+
         <?php endif; ?>
-    </ul>
-  </aside>
+      </ul>
+    </aside>
 
     <main class="contenido">
       <h2>
-        <?php 
-          if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
-            if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-              echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
-            } else {
-              echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
-            }
+        <?php
+        if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
+          if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
+            echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
+          } else {
+            echo htmlspecialchars($_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']);
           }
+        }
         ?>
       </h2>
 
-        <form action="/SuperRosita/index.php?action=changePassword" method="POST">
-          <div class="contrasena">
-              <label for="oldPassword">Contraseña Actual</label>
-              <input type="password" id="oldPassword" name="oldPassword" placeholder="Contraseña actual" required>
+      <form action="/SuperRosita/index.php?action=changePassword" method="POST">
+        <div class="contrasena">
+          <label for="oldPassword">Contraseña Actual</label>
+          <input type="password" id="oldPassword" name="oldPassword" placeholder="Contraseña actual" required>
 
-              <label for="password">Nueva Contraseña</label>
-              <input type="password" id="password" name="password" placeholder="Nueva contraseña" required>
-          </div>
-            
-          <button type="submit" class="btn">Cambiar Contraseña</button>
+          <label for="password">Nueva Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="Nueva contraseña" required>
+        </div>
 
-          <?php if (isset($_SESSION['error_cambio'])): ?>
-            <p style="color: #FF0000"><?php echo $_SESSION['error_cambio']; ?></p>
+        <button type="submit" class="btn">Cambiar Contraseña</button>
+
+        <?php if (isset($_SESSION['error_cambio'])): ?>
+          <p style="color: #FF0000"><?php echo $_SESSION['error_cambio']; ?></p>
           <?php unset($_SESSION['error_cambio']); ?>
-          <?php endif; ?>
+        <?php endif; ?>
 
-          <?php if (isset($_SESSION['mensaje_exito'])): ?>
-            <p style="color: #00A000"><?php echo $_SESSION['mensaje_exito']; ?></p>
+        <?php if (isset($_SESSION['mensaje_exito'])): ?>
+          <p style="color: #00A000"><?php echo $_SESSION['mensaje_exito']; ?></p>
           <?php unset($_SESSION['mensaje_exito']); ?>
-          <?php endif; ?>
-        </form>
+        <?php endif; ?>
+      </form>
 
     </main>
-    
+
   </div>
 
 </body>
+
 </html>
