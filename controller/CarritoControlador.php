@@ -44,8 +44,9 @@ class CarritoControlador {
         return $carrito->completarCompra($codigoCliente);
     }
 
-    public function eliminarProducto($codigoCarrito) {
-        return $this->actualizarEstadoProducto($codigoCarrito, 3);
+    public function eliminarProducto($codigoProducto, $codigoCliente) {
+        $carrito = new Carrito($this->db);
+        return $carrito->eliminarProducto($codigoProducto, $codigoCliente);
     }
 
     public function iniciarReembolso($codigoCarrito, $descripcion) {

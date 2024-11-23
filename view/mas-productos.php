@@ -8,14 +8,11 @@ $dbConnection = (new Connection())->connect();
 // Crear instancia del controlador con la conexión a la base de datos
 $productoControlador = new ProductoControlador($dbConnection);
 $productos = $productoControlador->MostrarProductos();
-
 $productosPorDepartamento = $productoControlador->ProductosDepartamento();
-
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +22,6 @@ $productosPorDepartamento = $productoControlador->ProductosDepartamento();
     <link rel="stylesheet" href="/SuperRosita/css/modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
 
     <?php include __DIR__ . '/header.php'; ?>
@@ -33,7 +29,6 @@ $productosPorDepartamento = $productoControlador->ProductosDepartamento();
     <div class="contenedor">
         <h1>Todos Los Productos</h1>
     </div>
-
 
     <section class="productos-destacados">
     <?php foreach ($productosPorDepartamento as $departamento => $productos): ?>
@@ -77,6 +72,8 @@ $productosPorDepartamento = $productoControlador->ProductosDepartamento();
                 <button id="addToCart"><i class="fas fa-shopping-bag"></i> Añadir al Carrito</button>
                 <button id="cancelarBtn">Cancelar</button>
             </div>
+            <p id="mensajeIniciarSesion" class="mensaje-iniciar-sesion">Por favor, <a href="/SuperRosita/login.php">inicia sesión</a> para agregar productos al carrito.</p>
+            <p id="mensajeTrabajador" class="mensaje-trabajador">No puedes agregar productos al carrito con una cuenta de trabajador.</p>
             <p id="success-message">Producto agregado exitosamente</p>
         </div>
     </div>
@@ -91,7 +88,10 @@ $productosPorDepartamento = $productoControlador->ProductosDepartamento();
             document.getElementById('modal-price').innerText = "$" + precio;
             document.getElementById('cantidad').innerText = 1;
             document.getElementById('modal').style.display = 'block';
+            document.getElementById('modal-footer').style.display = 'flex';
             document.getElementById('success-message').style.display = 'none';
+            document.getElementById('mensajeIniciarSesion').style.display = 'none';
+            document.getElementById('mensajeTrabajador').style.display = 'none';
         }
 
         window.addEventListener('click', event => {
@@ -116,7 +116,12 @@ $productosPorDepartamento = $productoControlador->ProductosDepartamento();
 
         document.getElementById('addToCart').addEventListener('click', () => {
             const cantidad = parseInt(document.getElementById('cantidad').innerText, 10);
-            agregarAlCarrito(productoSeleccionado, cantidad);
+            <?php if (isset($_SESSION['codigo_trabajador'])): ?>
+                document.getElementById('mensajeTrabajador').style.display = 'block';
+                document.getElementById('modal-footer').style.display = 'none';
+            <?php else: ?>
+                agregarAlCarrito(productoSeleccionado, cantidad);
+            <?php endif; ?>
         });
 
         document.getElementById('cancelarBtn').addEventListener('click', () => {
@@ -137,10 +142,13 @@ $productosPorDepartamento = $productoControlador->ProductosDepartamento();
             .then(data => {
                 if (data.success) {
                     document.getElementById('success-message').style.display = 'block';
-                    document.getElementById('modal-footer').style.display = 'none';  //Borra los botones
+                    document.getElementById('modal-footer').style.display = 'none';
+                    document.getElementById('mensajeIniciarSesion').style.display = 'none';
                     setTimeout(() => {
                         document.getElementById('modal').style.display = 'none';
                     }, 1000);
+                } else if (data.message === 'iniciar_sesion') {
+                    document.getElementById('mensajeIniciarSesion').style.display = 'block';
                 } else {
                     alert('Error al agregar el producto al carrito');
                 }
@@ -151,5 +159,4 @@ $productosPorDepartamento = $productoControlador->ProductosDepartamento();
     </script>
 
 </body>
-
 </html>

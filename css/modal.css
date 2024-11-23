@@ -58,10 +58,8 @@
     align-items: center;
 }
 #cancelarBtn {
-    margin-left: auto; /* Esto moverá el botón a la derecha */
+    margin-left: auto;
 }
-
-/* Clases para colores de texto */
 .reembolsado {
     color: green;
     font-weight: bold;

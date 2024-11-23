@@ -54,6 +54,7 @@ if (isset($_GET['action'])) {
 
         //Apartado de Carrito    
         case 'agregarAlCarrito':
+            if (!isset($_SESSION['codigo_cliente'])) { echo json_encode(['success' => false, 'message' => 'iniciar_sesion']); exit(); }
             $data = json_decode(file_get_contents('php://input'), true);
             $codigoProducto = $data['codigoProducto'] ?? null;
             $cantidad = $data['cantidad'] ?? null;
