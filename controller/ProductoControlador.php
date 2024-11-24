@@ -114,28 +114,11 @@ class ProductoControlador
     }
 
     public function ProductosDepartamento(){
-    try {
-
-        $sql = "SELECT D.NOMBRE_DEPARTAMENTO, 
-                       P.NOMBRE_PRODUCTO, 
-                       P.CODIGO_PRODUCTO, 
-                       P.PRECIO_VENTA_PRODUCTO
-                FROM MMVK_DEPARTAMENTO D
-                JOIN MMVK_PRODUCTO P ON D.CODIGO_DEPARTAMENTO = P.CODIGO_DEPARTAMENTO
-                ORDER BY D.NOMBRE_DEPARTAMENTO, P.NOMBRE_PRODUCTO";
-        $stmt = oci_parse($this->db, $sql);
-
-        oci_execute($stmt);
-        $productos = [];
-        
-        while ($row = oci_fetch_assoc($stmt)) {
-            $productos[$row['NOMBRE_DEPARTAMENTO']][] = $row;
-        }
-
-        return $productos;
-    } catch (Exception $e) {
-        error_log("Error al obtener productos: " . $e->getMessage());
-        return [];
+        $producto = new Producto($this->db);
+        return $producto->ProductosPorDepartamento();
     }
-}
+    public function ProductosPromociones(){
+    $producto = new Producto($this->db);
+    return $producto->ProductosPorPromociones();
+    }
 }

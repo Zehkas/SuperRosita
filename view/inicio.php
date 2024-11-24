@@ -7,7 +7,8 @@ $dbConnection = (new Connection())->connect();
 
 // Crear instancia del controlador con la conexión a la base de datos
 $productoControlador = new ProductoControlador($dbConnection);
-$productosAleatorios = $productoControlador->MostrarProductosAleatorios(4);
+$productosPromociones = $productoControlador->ProductosPromociones();
+
 ?>
 
 <!DOCTYPE html>
@@ -41,29 +42,42 @@ $productosAleatorios = $productoControlador->MostrarProductosAleatorios(4);
     <div class="contenedor">
         <h1>Página Principal</h1>
     </div>
-    <div class="banner-promociones">
-        <p>Espacio para promociones, actualizaremos...</p>
-    </div>
 
     <section class="productos-destacados">
-        <?php foreach ($productosAleatorios as $producto): ?>
-            <div class="producto" onclick="mostrarModal('<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['CODIGO_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?>')">
-                <?php if (isset($producto['NOMBRE_PRODUCTO'], $producto['PRECIO_VENTA_PRODUCTO'], $producto['CODIGO_PRODUCTO'])): ?>
-                    <?php
-                    $nombreImagen = strtolower(str_replace(' ', '_', $producto['NOMBRE_PRODUCTO'])) . '.png';
-                    ?>
-                    <img src="/SuperRosita/imgs/<?php echo htmlspecialchars($nombreImagen); ?>"
-                        alt="<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>">
-                    <h2><?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?></h2>
-                    <p>$<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?></p>
-                <?php else: ?>
-                    <p>Datos del producto no disponibles</p>
-                <?php endif; ?>
+        <?php if (!empty($productosPromociones)): ?>
+            <div class="banner-promociones">
+                <p>¡Aprovecha nuestras ofertas exclusivas!</p>
             </div>
-        <?php endforeach; ?>
+            <?php foreach ($productosPromociones as $departamento => $productos): ?>
+                <div class="departamento">
+                    <h2><?php echo htmlspecialchars($departamento); ?></h2>
+                    <div class="productos">
+                    <?php foreach ($productos as $producto): ?>
+                        <div class="producto" onclick="mostrarModal('<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['CODIGO_PRODUCTO']); ?>', '<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?>')">
+                            <?php if (isset($producto['NOMBRE_PRODUCTO'], $producto['PRECIO_VENTA_PRODUCTO'], $producto['CODIGO_PRODUCTO'])): ?>
+                                <?php
+                                $nombreImagen = strtolower(str_replace(' ', '_', $producto['NOMBRE_PRODUCTO'])) . '.png';
+                                ?>
+                                <img src="/SuperRosita/imgs/<?php echo htmlspecialchars($nombreImagen); ?>"
+                                     alt="<?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?>">
+                                <h3><?php echo htmlspecialchars($producto['NOMBRE_PRODUCTO']); ?></h3>
+                                <p>$<?php echo htmlspecialchars($producto['PRECIO_VENTA_PRODUCTO']); ?></p>
+                            <?php else: ?>
+                                <p>Datos del producto no disponibles</p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="banner-promociones">
+                <p>Actualmente no hay promociones activas</p>
+            </div>
+        <?php endif; ?>
     </section>
 
-    <div class="ver-mas"> <button onclick="location.href='/SuperRosita/mas-productos'">Ver más productos</button> </div>
+    <div class="ver-mas"> <button onclick="location.href='/SuperRosita/mas-productos'">Ver todos los productos</button> </div>
 
     <div id="modal" class="modal">
         <div class="modal-content">

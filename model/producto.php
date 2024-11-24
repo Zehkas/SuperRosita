@@ -122,47 +122,49 @@ class Producto
             die("Error al obtener productos: " . $error['message']);
         }
     }
-        public function obtenerTodosLosProductos() {
-            try {
-                $sql = "SELECT * FROM MMVK_PRODUCTO";
-                $stmt = oci_parse($this->db, $sql);
-                oci_execute($stmt);
-    
-                $productos = [];
-                while ($row = oci_fetch_assoc($stmt)) {
-                    $productos[] = $row;
-                }
-    
-                oci_free_statement($stmt);
-                return $productos;
-            } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
-                return [];
+    public function obtenerTodosLosProductos()
+    {
+        try {
+            $sql = "SELECT * FROM MMVK_PRODUCTO";
+            $stmt = oci_parse($this->db, $sql);
+            oci_execute($stmt);
+
+            $productos = [];
+            while ($row = oci_fetch_assoc($stmt)) {
+                $productos[] = $row;
             }
+
+            oci_free_statement($stmt);
+            return $productos;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
         }
-    
-        // Obtener productos aleatorios
-        public function obtenerProductosAleatorios($cantidad) {
-            try {
-                $sql = "SELECT * FROM (
+    }
+
+    // Obtener productos aleatorios
+    public function obtenerProductosAleatorios($cantidad)
+    {
+        try {
+            $sql = "SELECT * FROM (
                             SELECT * FROM MMVK_PRODUCTO ORDER BY DBMS_RANDOM.VALUE
                         ) WHERE ROWNUM <= :cantidad";
-                $stmt = oci_parse($this->db, $sql);
-                oci_bind_by_name($stmt, ':cantidad', $cantidad);
-                oci_execute($stmt);
-    
-                $productos = [];
-                while ($row = oci_fetch_assoc($stmt)) {
-                    $productos[] = $row;
-                }
-    
-                oci_free_statement($stmt);
-                return $productos;
-            } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
-                return [];
+            $stmt = oci_parse($this->db, $sql);
+            oci_bind_by_name($stmt, ':cantidad', $cantidad);
+            oci_execute($stmt);
+
+            $productos = [];
+            while ($row = oci_fetch_assoc($stmt)) {
+                $productos[] = $row;
             }
+
+            oci_free_statement($stmt);
+            return $productos;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return [];
         }
+    }
     public function obtenerProductoPorCodigo($codigoProducto)
     {
         try {
@@ -176,6 +178,60 @@ class Producto
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return false;
+        }
+    }
+    public function ProductosPorDepartamento()
+    {
+        try {
+
+            $sql = "SELECT D.NOMBRE_DEPARTAMENTO, 
+                           P.NOMBRE_PRODUCTO, 
+                           P.CODIGO_PRODUCTO, 
+                           P.PRECIO_VENTA_PRODUCTO
+                    FROM MMVK_DEPARTAMENTO D
+                    JOIN MMVK_PRODUCTO P ON D.CODIGO_DEPARTAMENTO = P.CODIGO_DEPARTAMENTO
+                    ORDER BY D.NOMBRE_DEPARTAMENTO, P.NOMBRE_PRODUCTO";
+            $stmt = oci_parse($this->db, $sql);
+
+            oci_execute($stmt);
+            $productos = [];
+
+            while ($row = oci_fetch_assoc($stmt)) {
+                $productos[$row['NOMBRE_DEPARTAMENTO']][] = $row;
+            }
+
+            return $productos;
+        } catch (Exception $e) {
+            error_log("Error al obtener productos: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function ProductosPorPromociones()
+    {
+        try {
+
+            $sql = "SELECT D.NOMBRE_DEPARTAMENTO, 
+                           P.NOMBRE_PRODUCTO, 
+                           P.CODIGO_PRODUCTO, 
+                           P.PRECIO_VENTA_PRODUCTO
+                    FROM MMVK_DEPARTAMENTO D
+                    JOIN MMVK_PRODUCTO P ON D.CODIGO_DEPARTAMENTO = P.CODIGO_DEPARTAMENTO
+                    WHERE P.PRECIO_VENTA_PRODUCTO != PRECIO_ORIGINAL_PRODUCTO
+                    ORDER BY D.NOMBRE_DEPARTAMENTO, P.NOMBRE_PRODUCTO";
+            $stmt = oci_parse($this->db, $sql);
+
+            oci_execute($stmt);
+            $productos = [];
+
+            while ($row = oci_fetch_assoc($stmt)) {
+                $productos[$row['NOMBRE_DEPARTAMENTO']][] = $row;
+            }
+
+            return $productos;
+        } catch (Exception $e) {
+            error_log("Error al obtener productos: " . $e->getMessage());
+            return [];
         }
     }
 }

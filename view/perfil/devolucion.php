@@ -43,6 +43,7 @@ $devoluciones = $carritoControlador->obtenerDevoluciones($idCliente);
         <?php endif; ?>
 
         <?php if (isset($_SESSION['codigo_cargo']) && $_SESSION['codigo_cargo'] === '1'): ?>
+          <li><a href="/SuperRosita/perfil/inventario">Inventario</a></li>
           <li><a href="/SuperRosita/perfil/ingresar-trabajador">Ingresar Trabajador</a></li>
           <li><a href="/SuperRosita/perfil/promocion">Gestionar Promociones</a></li>
           <li><a href="/SuperRosita/perfil/gestion-devoluciones">Gestionar Devoluciones</a></li>
