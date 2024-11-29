@@ -6,7 +6,6 @@ require_once './model/usuario.php';
 class UsuarioControlador {
     public function Registro() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Obtener los datos enviados desde el formulario
             $nombre = $_POST['nombre'];
             $apellido1 = $_POST['apellido1'];
             $apellido2 = $_POST['apellido2'];
@@ -14,21 +13,18 @@ class UsuarioControlador {
             $region = $_POST['region'];
             $contrasena = $_POST['contrasena'];
             
-            // Validar que el código de región sea correcto
-            $regiones_validas = ['1', '2']; // Agrega los códigos de región válidos
+            $regiones_validas = ['1', '2'];
             if (!in_array($region, $regiones_validas)) {
                 echo "Error: Seleccione una región válida.";
                 exit();
             }
 
-            // Crear una instancia del modelo Usuario
             $usuario = new Usuario();
             
-            // Llamar al método agregarCliente del modelo
             $resultado = $usuario->agregarCliente($region, $correo, $nombre, $apellido1, $apellido2, $contrasena);
 
             if ($resultado) {
-                header("Location: /SuperRosita/success"); // Redirige a una página de éxito
+                header("Location: /SuperRosita/success");
                 exit();
             } else {
                 $_SESSION['error_registro'] = "Error al registrarse";

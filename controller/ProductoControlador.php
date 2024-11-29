@@ -1,18 +1,15 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SuperRosita/model/producto.php';
 
-class ProductoControlador
-{
+class ProductoControlador{
     private $db;
 
-    public function __construct($dbConnection)
-    {
+    public function __construct($dbConnection){
         $this->db = $dbConnection;
     }
 
     // Método para registrar un nuevo producto
-    public function RegistroProducto()
-    {
+    public function RegistroProducto(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nombre = $_POST['nombre_producto'];
             $peso = $_POST['peso_producto'];
@@ -34,8 +31,7 @@ class ProductoControlador
         }
     }
 
-    public function EditarProducto()
-    {
+    public function EditarProducto(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $codigo_producto = $_POST['codigo_producto'];
             $nombre = $_POST['nombre_producto'];
@@ -58,8 +54,7 @@ class ProductoControlador
         }
     }
 
-    public function EliminarProducto()
-    {
+    public function EliminarProducto(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $codigo_producto = $_POST['codigo_producto'];
 
@@ -74,14 +69,12 @@ class ProductoControlador
         }
     }
 
-    public function MostrarProductos()
-    {
+    public function MostrarProductos(){
         $producto = new Producto($this->db);
         return $producto->obtenerTodosLosProductos();
     }
 
-    public function AgregarAlCarrito($codigoProducto, $idCliente, $cantidad = 1)
-    {
+    public function AgregarAlCarrito($codigoProducto, $idCliente, $cantidad = 1){
         $producto = new Producto($this->db);
         $carrito = new Carrito($this->db);
 
@@ -95,20 +88,17 @@ class ProductoControlador
         }
     }
 
-    public function MostrarProductosAleatorios($cantidad)
-    {
+    public function MostrarProductosAleatorios($cantidad){
         $producto = new Producto($this->db);
         return $producto->obtenerProductosAleatorios($cantidad);
     }
 
-    public function EliminarDelCarrito($codigoCarrito, $codigoProducto)
-    {
+    public function EliminarDelCarrito($codigoCarrito, $codigoProducto){
         $carrito = new Carrito($this->db);
         $carrito->actualizarEstadoProducto($codigoCarrito, $codigoProducto, 3);
     }
 
-    public function CompletarCompra($codigoCarrito, $codigoProducto)
-    {
+    public function CompletarCompra($codigoCarrito, $codigoProducto){
         $carrito = new Carrito($this->db);
         $carrito->actualizarEstadoProducto($codigoCarrito, $codigoProducto, 1);
     }

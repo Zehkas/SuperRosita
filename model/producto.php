@@ -10,7 +10,6 @@ class Producto
         $this->db = $dbConnection;
     }
 
-    // Método para agregar un nuevo producto
     public function agregarProducto($nombre, $peso, $fecha_fabricacion, $precio_compra, $precio_venta, $existencia, $codigo_pais, $codigo_departamento)
     {
         $sql = "BEGIN 
@@ -19,7 +18,6 @@ class Producto
 
         $stmt = oci_parse($this->db, $sql);
 
-        // Asignar los parámetros
         oci_bind_by_name($stmt, ':nombre', $nombre);
         oci_bind_by_name($stmt, ':peso', $peso);
         oci_bind_by_name($stmt, ':fecha_fabricacion', $fecha_fabricacion);
@@ -42,7 +40,6 @@ class Producto
         }
     }
 
-    // Método para editar un producto existente
     public function editarProducto($codigo_producto, $nombre, $peso, $fecha_fabricacion, $precio_compra, $precio_venta, $existencia, $codigo_pais, $codigo_departamento)
     {
         $sql = "BEGIN 
@@ -52,7 +49,6 @@ class Producto
 
         $stmt = oci_parse($this->db, $sql);
 
-        // Asignar los parámetros
         oci_bind_by_name($stmt, ':codigo_producto', $codigo_producto);
         oci_bind_by_name($stmt, ':nombre', $nombre);
         oci_bind_by_name($stmt, ':peso', $peso);
@@ -76,7 +72,6 @@ class Producto
         }
     }
 
-    // Método para eliminar un producto existente
     public function eliminarProducto($codigo_producto)
     {
         $sql = "BEGIN 
@@ -87,7 +82,6 @@ class Producto
 
         $stmt = oci_parse($this->db, $sql);
 
-        // Asignar el parámetro
         oci_bind_by_name($stmt, ':codigo_producto', $codigo_producto);
 
         try {
@@ -103,7 +97,6 @@ class Producto
         }
     }
 
-    // Método para obtener todos los productos
     public function obtenerProductos()
     {
         $sql = "SELECT CODIGO_PRODUCTO, NOMBRE_PRODUCTO, PRECIO_VENTA_PRODUCTO FROM MMVK_PRODUCTO";
@@ -142,7 +135,6 @@ class Producto
         }
     }
 
-    // Obtener productos aleatorios
     public function obtenerProductosAleatorios($cantidad)
     {
         try {

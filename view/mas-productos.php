@@ -2,10 +2,8 @@
 require_once __DIR__ . '/../controller/ProductoControlador.php';
 require_once __DIR__ . '/../connection.php';
 
-// Crear conexión a la base de datos
 $dbConnection = (new Connection())->connect();
 
-// Crear instancia del controlador con la conexión a la base de datos
 $productoControlador = new ProductoControlador($dbConnection);
 $productos = $productoControlador->MostrarProductos();
 $productosPorDepartamento = $productoControlador->ProductosDepartamento();

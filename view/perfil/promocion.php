@@ -7,7 +7,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SuperRosita/controller/PromocionContr
 
 $dbConnection = (new Connection())->connect();
 
-// Crear instancia del controlador con la conexión a la base de datos
 $promocionControlador = new PromocionControlador($dbConnection);
 $promociones = $promocionControlador->PromocionesDisponibles();
 
@@ -156,7 +155,7 @@ $promociones = $promocionControlador->PromocionesDisponibles();
                 if (descuento) {
                     porcentajeTexto.textContent = descuento + "%";
                 } else {
-                    porcentajeTexto.textContent = ""; // Si no hay valor, limpiar el texto
+                    porcentajeTexto.textContent = "";
                 }
             }
             </script>

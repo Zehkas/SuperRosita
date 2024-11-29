@@ -1,8 +1,6 @@
 <?php
 class Connection {
     public function connect() {
-        //$db_user = "bd_miguel";
-        //$db_password = "miguel2003";
         $db_user = "ROSITA";
         $db_password = "superrosita";
 

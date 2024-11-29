@@ -1,8 +1,7 @@
 <?php
 require_once './connection.php';
 
-class Carrito
-{
+class Carrito{
     private $db;
 
     public function __construct($dbConnection)
@@ -13,7 +12,7 @@ class Carrito
     public function agregarProducto($codigoProducto, $codigoCliente, $cantidad, $precioTotal)
     {
         try {
-            //Verifica si existe un carrito con el mismo producto y cliente pendiente
+            
             $sql = "SELECT CANTIDAD_CARRITO, PRECIO_CARRITO FROM MMVK_CARRITO WHERE CODIGO_PRODUCTO = :codigo_producto AND CODIGO_CLIENTE = :codigo_cliente AND ESTADO_CARRITO = 2";
             $stmt = oci_parse($this->db, $sql);
             oci_bind_by_name($stmt, ':codigo_producto', $codigoProducto);
@@ -22,7 +21,7 @@ class Carrito
             $carritoExistente = oci_fetch_assoc($stmt);
     
             if ($carritoExistente) {
-                //De existir coincidencia cambio los valores totales
+                
                 $nuevaCantidad = $carritoExistente['CANTIDAD_CARRITO'] + $cantidad;
                 $nuevoPrecio = $carritoExistente['PRECIO_CARRITO'] + $precioTotal;
                 $sqlUpdate =    "UPDATE MMVK_CARRITO 
@@ -41,7 +40,6 @@ class Carrito
                 }
                 oci_free_statement($stmtUpdate);
             } else {
-                //Si no existe, se crea un nuevo carrito
                 $sqlInsert =    "BEGIN
                                     MMVK_CRUD_CARRITO(NULL, 2, :cantidad_carrito, :precio_total, :codigo_producto, :codigo_cliente, 'I');
                                 END;";
@@ -243,7 +241,6 @@ class Carrito
     public function iniciarReembolso($codigoCarrito, $descripcion)
     {
         try {
-            // Obtener los códigos de producto y cliente desde el carrito
             $sqlCarrito = "SELECT CODIGO_PRODUCTO, CODIGO_CLIENTE FROM MMVK_CARRITO WHERE CODIGO_CARRITO = :codigo_carrito";
             $stmtCarrito = oci_parse($this->db, $sqlCarrito);
             oci_bind_by_name($stmtCarrito, ':codigo_carrito', $codigoCarrito);
@@ -257,7 +254,6 @@ class Carrito
             $codigoProducto = $carritoInfo['CODIGO_PRODUCTO'];
             $codigoCliente = $carritoInfo['CODIGO_CLIENTE'];
             
-            // Insertar en la tabla de devoluciones
             $sql = "BEGIN
                         MMVK_CRUD_DEVOLUCION(NULL, SYSDATE, :descripcion, :codigo_producto, :codigo_cliente, 'I');
                     END;";
@@ -272,7 +268,6 @@ class Carrito
                 throw new Exception("Error en iniciarReembolso: " . $error['message']);
             }
 
-            // Actualizar estado del producto en el carrito
             $this->actualizarEstadoProducto($codigoCarrito, 5);
 
             oci_free_statement($stmt);

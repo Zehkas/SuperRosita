@@ -8,10 +8,8 @@ require_once './controller/PromocionControlador.php';
 require_once './controller/BoletaControlador.php';
 require_once './connection.php';
 
-// Crear conexión a la base de datos
 $dbConnection = (new Connection())->connect();
 
-// Crear instancias de los controladores con la conexión a la base de datos
 $usuarioControlador = new UsuarioControlador($dbConnection);
 $productoControlador = new ProductoControlador($dbConnection);
 $redirectControlador = new RedirectControlador();
@@ -20,10 +18,8 @@ $trabajadorControlador = new TrabajadorControlador($dbConnection);
 $promocionControlador = new PromocionControlador($dbConnection);
 $boletaControlador = new BoletaControlador($dbConnection);
 
-// Acciones relacionadas con el usuario
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
-        //Apartado relacionado a las cuentas
         case 'registro':
             $usuarioControlador->Registro();
             break;
@@ -36,7 +32,6 @@ if (isset($_GET['action'])) {
         case 'changePassword':
             $usuarioControlador->cambioContrasena();
             break;
-        // Apartado realacionado a los productos
         case 'registroProducto':
             $productoControlador->RegistroProducto();
             break;
@@ -52,9 +47,7 @@ if (isset($_GET['action'])) {
         case 'eliminarProducto':
             $productoControlador->EliminarProducto();
             break;
-
-
-        //Apartado de Carrito    
+   
         case 'agregarAlCarrito':
             if (!isset($_SESSION['codigo_cliente'])) { echo json_encode(['success' => false, 'message' => 'iniciar_sesion']); exit(); }
             $data = json_decode(file_get_contents('php://input'), true);
@@ -99,10 +92,7 @@ if (isset($_GET['action'])) {
                 echo json_encode(['success' => false, 'message' => 'Cliente no autenticado']);
             }
             exit();
-
-
-
-        //Apartado de Devoluciones   
+ 
         case 'editarReembolso':
             $codigoCarrito = $_POST['codigoCarrito'] ?? null;
             $descripcion = $_POST['descripcion'] ?? null;
@@ -158,11 +148,6 @@ if (isset($_GET['action'])) {
                     echo json_encode(['error' => 'No se encontró el código de cliente']);
                 }
                 exit();
-
-
-
-        
-
         default:
             header('Location: ./view/inicio.php');
             exit();
@@ -170,7 +155,6 @@ if (isset($_GET['action'])) {
     }
 }
 
-// Rutas amigables
 elseif (isset($_GET['ruta'])) {
     $ruta = $_GET['ruta'];
     $redirectControlador->redirigir($ruta);

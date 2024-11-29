@@ -57,7 +57,6 @@ if (session_status() === PHP_SESSION_NONE) {
     }
 
 
-    /* Estilos para la ventana desplegable del carrito */
     .carrito-desplegable {
         display: none;
         position: fixed;

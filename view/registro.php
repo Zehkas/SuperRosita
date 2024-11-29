@@ -48,7 +48,6 @@
                         <option value="">Seleccione una región</option>
                         <option value="1">Maule</option>
                         <option value="2">Ñuble</option>
-                        <!-- Agrega más opciones si tienes otras regiones en tu base de datos -->
                     </select>
 
                     <input type="submit" value="Registrar">
