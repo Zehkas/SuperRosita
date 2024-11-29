@@ -196,25 +196,50 @@ class Carrito
     public function completarCompra($codigoCliente)
     {
         try {
+            // Actualizar el estado del carrito
             $sql = "UPDATE MMVK_CARRITO SET ESTADO_CARRITO = 1 WHERE CODIGO_CLIENTE = :codigo_cliente AND ESTADO_CARRITO = 2";
             $stmt = oci_parse($this->db, $sql);
-
             oci_bind_by_name($stmt, ':codigo_cliente', $codigoCliente);
-
             $result = oci_execute($stmt);
-
+    
             if (!$result) {
                 $error = oci_error($stmt);
                 throw new Exception("Error en completarCompra: " . $error['message']);
             }
-
+    
+            // Llamar al procedimiento para generar la cabeza de boleta
+            $sqlCabeza = "BEGIN GENERAR_CABEZA_BOLETA(:codigo_cliente); END;";
+            $stmtCabeza = oci_parse($this->db, $sqlCabeza);
+            oci_bind_by_name($stmtCabeza, ':codigo_cliente', $codigoCliente);
+            $resultCabeza = oci_execute($stmtCabeza);
+    
+            if (!$resultCabeza) {
+                $error = oci_error($stmtCabeza);
+                throw new Exception("Error al ejecutar GENERAR_CABEZA_BOLETA: " . $error['message']);
+            }
+    
+            // Llamar al procedimiento para generar el cuerpo de la boleta
+            $sqlCuerpo = "BEGIN GENERAR_CUERPO_BOLETA(:codigo_cliente); END;";
+            $stmtCuerpo = oci_parse($this->db, $sqlCuerpo);
+            oci_bind_by_name($stmtCuerpo, ':codigo_cliente', $codigoCliente);
+            $resultCuerpo = oci_execute($stmtCuerpo);
+    
+            if (!$resultCuerpo) {
+                $error = oci_error($stmtCuerpo);
+                throw new Exception("Error al ejecutar GENERAR_CUERPO_BOLETA: " . $error['message']);
+            }
+    
+            oci_free_statement($stmtCabeza);
+            oci_free_statement($stmtCuerpo);
             oci_free_statement($stmt);
+    
             return $result;
         } catch (Exception $e) {
             echo $e->getMessage();
             return false;
         }
     }
+    
 
     public function iniciarReembolso($codigoCarrito, $descripcion)
     {
