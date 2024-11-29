@@ -9,7 +9,7 @@ class BoletaControlador{
         $this->db = $dbConnection;
     }
 
-    public function obtenerBoleta($codigoCliente, $nomb){
+    public function obtenerBoleta($codigoCliente){
         $boleta = new Boleta($this->db);
         return $boleta->obtenerUltimaBoleta($codigoCliente);
     }
