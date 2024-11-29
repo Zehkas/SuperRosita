@@ -12,17 +12,8 @@ if (session_status() === PHP_SESSION_NONE) {
     <title>Ingresar Trabajador</title>
     <link rel="stylesheet" href="/SuperRosita/css/global.css">
     <link rel="stylesheet" href="/SuperRosita/css/perfil.css">
-    <link rel="stylesheet" href="/SuperRosita/css/registro.css"> <!-- Línea añadida -->
-    <style>
-        .centrar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            top: calc(50vh - 42.22px);
-            transform: translateY(-50%);
-        }
-    </style>
+    <link rel="stylesheet" href="/SuperRosita/css/perfil/ingTrabajador.css">
+
 </head>
 
 <body>
@@ -69,7 +60,7 @@ if (session_status() === PHP_SESSION_NONE) {
             </h2>
 
             <div class="centrar">
-                <div class="contenedorRegistro">
+                <div class="contenedorIngresar">
                     <h2>Registro de Trabajador</h2>
                     <form action="/SuperRosita/index.php?action=registro_trabajador" method="post">
                         <div class="formInterior">

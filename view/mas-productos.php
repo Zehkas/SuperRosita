@@ -72,7 +72,7 @@ $productosPorDepartamento = $productoControlador->ProductosDepartamento();
                 <button id="addToCart"><i class="fas fa-shopping-bag"></i> Añadir al Carrito</button>
                 <button id="cancelarBtn">Cancelar</button>
             </div>
-            <p id="mensajeIniciarSesion" class="mensaje-iniciar-sesion">Por favor, <a href="/SuperRosita/login.php">inicia sesión</a> para agregar productos al carrito.</p>
+            <p id="mensajeIniciarSesion" class="mensaje-iniciar-sesion">Por favor, <a href="login">inicia sesión</a> para agregar productos al carrito.</p>
             <p id="mensajeTrabajador" class="mensaje-trabajador">No puedes agregar productos al carrito con una cuenta de trabajador.</p>
             <p id="success-message">Producto agregado exitosamente</p>
         </div>

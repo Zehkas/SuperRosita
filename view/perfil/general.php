@@ -13,6 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <title>Mi Perfil</title>
   <link rel="stylesheet" href="/SuperRosita/css/global.css">
   <link rel="stylesheet" href="/SuperRosita/css/perfil.css">
+  <link rel="stylesheet" href="/SuperRosita/css/perfil/general.css">
 </head>
 
 <body>
@@ -27,6 +28,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <?php if (isset($_SESSION['codigo_cliente'])): ?>
           <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
           <li><a href="/SuperRosita/perfil/devolucion">Devolucion</a></li>
+          <li><a href="/SuperRosita/perfil/boleta">Boleta</a></li>
         <?php endif; ?>
 
         <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
@@ -45,24 +47,28 @@ if (session_status() === PHP_SESSION_NONE) {
     </aside>
 
     <main class="contenido">
-      <h2>
+      <div class="datos-cuenta">
+        <h2>Datos de la cuenta</h2>
+        <div class="contenido-datos">
         <?php
         if (isset($_SESSION['usuario'], $_SESSION['nombre'], $_SESSION['apellido1'], $_SESSION['apellido2'])) {
           if (str_ends_with($_SESSION['usuario'], '@superrosita.cl')) {
-            echo htmlspecialchars("Trabajador " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']) . "<br>";
-            echo htmlspecialchars("Fecha de Contrato: " . $_SESSION['fecha_contrato']) . "<br>";
-            echo htmlspecialchars("Tipo de cuenta: " . "Trabajador") . "<br>";
-          } else {
-            echo htmlspecialchars("Cliente " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']) . "<br>";
-            echo htmlspecialchars("Tipo de cuenta: " . "Cliente") . "<br>";
-          }
+          echo htmlspecialchars("Trabajador: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']) . "<br>";
+          echo htmlspecialchars("Fecha de Contrato: " . $_SESSION['fecha_contrato']) . "<br>";
+          echo htmlspecialchars("Tipo de cuenta: Trabajador") . "<br>";
+        } else {
+          echo htmlspecialchars("Cliente: " . $_SESSION['nombre'] . " " . $_SESSION['apellido1'] . " " . $_SESSION['apellido2']) . "<br>";
+          echo htmlspecialchars("Tipo de cuenta: Cliente") . "<br>";
         }
-        if (isset($_SESSION['usuario'])) {
-          echo htmlspecialchars("Correo Electronico " . $_SESSION['usuario']) . "<br>";
-        }
-        ?>
-      </h2>
-    </main>
+      }
+      if (isset($_SESSION['usuario'])) {
+        echo htmlspecialchars("Correo Electrónico: " . $_SESSION['usuario']) . "<br>";
+      }
+      ?>
+    </div>
+  </div>
+</main>
+
 
   </div>
 </body>
