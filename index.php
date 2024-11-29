@@ -5,6 +5,7 @@ require_once './controller/RedirectControlador.php';
 require_once './controller/CarritoControlador.php';
 require_once './controller/TrabajadorControlador.php';
 require_once './controller/PromocionControlador.php';
+require_once './controller/BoletaControlador.php';
 require_once './connection.php';
 
 // Crear conexión a la base de datos
@@ -17,6 +18,7 @@ $redirectControlador = new RedirectControlador();
 $carritoControlador = new CarritoControlador($dbConnection);
 $trabajadorControlador = new TrabajadorControlador($dbConnection);
 $promocionControlador = new PromocionControlador($dbConnection);
+$boletaControlador = new BoletaControlador($dbConnection);
 
 // Acciones relacionadas con el usuario
 if (isset($_GET['action'])) {
@@ -146,9 +148,25 @@ if (isset($_GET['action'])) {
                 echo json_encode(['success' => false, 'message' => 'Datos faltantes']);
             }
             exit();
+        
+            case 'obtenerBoleta':
+                $idCliente = $_SESSION['codigo_cliente'];
+                if ($idCliente) {
+                    $boleta = $boletaControlador->obtenerBoleta($idCliente);
+                    echo json_encode(['boleta' => $boleta]);
+                } else {
+                    echo json_encode(['error' => 'No se encontró el código de cliente']);
+                }
+                exit();
+
+
+
+        
+
         default:
             header('Location: ./view/inicio.php');
             exit();
+
     }
 }
 

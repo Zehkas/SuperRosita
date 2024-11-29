@@ -1,0 +1,52 @@
+.contenedor-botones {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #f9f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.contenedor-botones h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #000000;
+    text-align: center;
+}
+
+.contenedor-botones button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #e4a8ca;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.contenedor-botones button:hover {
+    background-color: #d18bb3;
+}
+
+
+#boletaResultado {
+    margin-top: 30px; 
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+    font-size: 14px;
+    color: #333;
+    max-height: 400px;
+    overflow-y: auto;
+    margin: 20px auto 0;
+    text-align: center;
+    display: none; 
+}

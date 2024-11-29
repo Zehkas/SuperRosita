@@ -46,6 +46,9 @@ class RedirectControlador {
                 require_once __DIR__ . '/../view/perfil/gestion-devoluciones.php';
                 break;
 
+            case 'perfil/boleta':
+                require_once __DIR__ . '/../view/perfil/boleta.php';
+                break;
             case 'perfil/ajustes':
                 require_once __DIR__ . '/../view/perfil/ajustes.php';
                 break;

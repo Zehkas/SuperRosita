@@ -13,7 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <title>Ajustes de Perfil</title>
   <link rel="stylesheet" href="/SuperRosita/css/global.css">
   <link rel="stylesheet" href="/SuperRosita/css/perfil.css">
-  <link rel="stylesheet" href="/SuperRosita/css/perfil/ajustes.css">
+  <link rel="stylesheet" href="/SuperRosita/css/perfil/boleta.css">
 </head>
 
 <body>
@@ -60,27 +60,39 @@ if (session_status() === PHP_SESSION_NONE) {
         ?>
       </h2>
 
-      <form action="/SuperRosita/index.php?action=changePassword" method="POST">
-        <div class="contrasena">
-          <label for="oldPassword">Contraseña Actual</label>
-          <input type="password" id="oldPassword" name="oldPassword" placeholder="Contraseña actual" required>
 
-          <label for="password">Nueva Contraseña</label>
-          <input type="password" id="password" name="password" placeholder="Nueva contraseña" required>
-        </div>
+      <div class="contenedor-botones">
+        <h3>Opciones para Boleta</h3>
+        <button id="mostrarBoletaBtn" class="btn">Mostrar última boleta</button>
+      </div>
 
-        <button type="submit" class="btn">Cambiar Contraseña</button>
+      <div id="boletaResultado" style="display: none;"></div>
 
-        <?php if (isset($_SESSION['error_cambio'])): ?>
-          <p style="color: #FF0000"><?php echo $_SESSION['error_cambio']; ?></p>
-          <?php unset($_SESSION['error_cambio']); ?>
-        <?php endif; ?>
+      <script>
+        document.getElementById('mostrarBoletaBtn').addEventListener('click', () => {
+          fetch('/SuperRosita/index.php?action=obtenerBoleta', {
+                  method: 'GET',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.boleta) {
+                        document.getElementById('boletaResultado').innerText = data.boleta;
+                        document.getElementById('boletaResultado').style.display = 'block';
 
-        <?php if (isset($_SESSION['mensaje_exito'])): ?>
-          <p style="color: #00A000"><?php echo $_SESSION['mensaje_exito']; ?></p>
-          <?php unset($_SESSION['mensaje_exito']); ?>
-        <?php endif; ?>
-      </form>
+                    } else {
+                        document.getElementById('boletaResultado').innerText = 'No se encontró la boleta.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al obtener la boleta:', error);
+                });
+            });
+        </script>
+
+
 
     </main>
 

@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codigoCarrito'], $_POS
         <?php if (isset($_SESSION['codigo_cliente'])): ?>
           <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
           <li><a href="/SuperRosita/perfil/devolucion">Devolucion</a></li>
+          <li><a href="/SuperRosita/perfil/boleta">Boleta</a></li>
         <?php endif; ?>
 
         <li><a href="/SuperRosita/perfil/ajustes">Ajustes</a></li>
