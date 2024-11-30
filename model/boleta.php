@@ -26,7 +26,7 @@ class Boleta {
 
             $cabezaBoleta = oci_fetch_assoc($stmtCabeza);
             if (!$cabezaBoleta) {
-                return "No se encontró ninguna boleta para el cliente con código: $codigoCliente.";
+                return "No se encontró ninguna boleta para el cliente";
             }
 
             $codigoCabezaBoleta = $cabezaBoleta['CODIGO_CABEZA_BOLETA'];

@@ -100,8 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['codigoCarrito'], $_POS
               <?php elseif ($compra['ESTADO'] == 7): ?>
                 <span class="reembolsopendiente">Reembolso Cancelado Por Cliente</span>
               <?php else: ?>
-                <button class="producto-boton" onclick="abrirModal(<?php echo $compra['CODIGO_CARRITO']; ?>)">Iniciar
-                  Reembolso</button>
+                <button class="producto-boton" onclick="abrirModal(<?php echo $compra['CODIGO_CARRITO']; ?>)">Iniciar Reembolso</button>
               <?php endif; ?>
             </div>
           </div>
