@@ -34,6 +34,27 @@
     margin-top: auto;
     align-self: flex-end;
   }
+
+  /*Boton para iniciar el reembolso*/
+  .producto-boton{
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+  }
+  
+  .producto-boton {
+    background-color: #D16D8C;
+    color: white;
+  }
+  
+  .producto-boton:hover {
+    background-color: #B45F75;
+  }
   
   .reembolsado {
     color: green;
@@ -117,6 +138,7 @@
       background-color: #c82333;
   }
 
+  
   .reembolsopendiente {
     display: flex;
     flex-direction: column;
@@ -162,24 +184,5 @@
   }
   
 
-  /*Boton que inicia el reembolso*/
-  .producto-boton {
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    display: inline-block;
-  }
   
-  .producto-boton {
-    background-color: #D16D8C;
-    color: white;
-  }
-  
-  .producto-boton:hover {
-    background-color: #B45F75;
-  }
-  
+

@@ -32,7 +32,7 @@ $promociones = $promocionControlador->PromocionesDisponibles();
 
             <?php if (isset($_SESSION['codigo_cliente'])): ?>
                 <li><a href="/SuperRosita/perfil/historial">Historial de compras</a></li>
-                <li><a href="/SuperRosita/perfil/devolucion">Devolucion</a></li>
+                <li><a href="/SuperRosita/perfil/devolucion">Devoluciones</a></li>
                 <li><a href="/SuperRosita/perfil/boleta">Boleta</a></li>
             <?php endif; ?>
 
