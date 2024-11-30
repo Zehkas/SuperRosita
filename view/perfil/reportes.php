@@ -62,7 +62,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </main>
     </div>
     <script>
-
+ 
         function mostrarReporte(numeroReporte) {
             fetch(`/SuperRosita/controller/ReporteControlador.php?action=obtenerReporte&numero=${numeroReporte}`)
                 .then(response => response.json())
