@@ -99,7 +99,7 @@ if (isset($_GET['action'])) {
 
             if (isset($_SESSION['codigo_cliente']) && $codigoCarrito !== null && $descripcion !== null) {
                 $carritoControlador->editarReembolso($codigoCarrito, $descripcion);
-                header('Location: /SuperRosita/perfil/devolucion'); // Redirigir a la página de devoluciones
+                header('Location: /SuperRosita/perfil/devolucion');
                 exit();
             } else {
                 echo json_encode(['success' => false, 'message' => 'Datos faltantes o cliente no autenticado']);
